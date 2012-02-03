@@ -69,6 +69,12 @@ p. The above snippet would display shortened Bitly link when placed to article "
 
 h2. Changelog
 
+h3. Version 0.4 - upcoming
+
+* Fixed: A potential issue with uninstaller SQL statement's wildcards.
+* Changed: Textpacks aren't embedded to the code, but uses installer.
+* Removed: Unnecessary HTML escaping in one of the preference controls.
+
 h3. Version 0.3 - 2011/12/05
 
 * Changed: Now uses Textpattern's @script_js()@ to output JavaScript blocks.
