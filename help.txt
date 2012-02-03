@@ -2,8 +2,8 @@ h1. rah_bitly
 
 p. Give articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when article is posted, or modified, and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface, adds zero more steps to article publishing.
 
-* Version: 0.1
-* Updated: 2011/07/20 3:25 AM UTC
+* Version: 0.2
+* Updated: 2011/07/21 11:55 AM UTC
 
 h3. Table of Contents
 
@@ -48,39 +48,45 @@ p. To start using rah_bitly you will first need to define your _Bitly login_,  _
 
 p. Setting the preferences is easy. You can find all you need in Textpattern's "Advanced Preferences":http://textpattern.net/wiki/index.php?title=Advanced_Preferences (TXP/Admin/Preferences/Admin), neatly organized under _Bitly integration_. Following preferences will be present.
 
-p. *Bitly Login* is where your login id to "Bitly":http://bit.ly service would go.
-
-p. *API key* is your API key. You can find your API key from your "Bitly":http://bit.ly account's settings panel.
-
-p. *Store in custom field* is the custom field that will be used to store the shortened link. Note: if by change you don't see your new, just created (note: just created), custom field right away in the list, make sure to reload the page. That's caused by minor Textpattern core quirk, and the way preferences are updated and reloaded.
+p. *Bitly login* is where your login id to "Bitly":http://bit.ly service would go. *API key* is your API key. You can find your API key from your Bitly account's settings panel. *Store in custom field* is the custom field that will be used to store the shortened link.
 
 h3(#inner-workings). Generating links
 
-p. Bitly links are generated for an article, when one of the couple conditions is met.
+p. Bitly links are generated for an article when one of the couple conditions is met.
 
-* When the article is published for the first time with _live_ or _sticky_ status.
-* When URL title has been modified and the article is still in _live_ or _sticky_ state.
+* When the article is published (re: saved) with _live_ or _sticky_ status for the first time.
+* When the URL title is modified and the article is still in _live_ or _sticky_ state.
 * When the custom field used to store the link is empty and article is saved with _live_ or _sticky_ status.
 
 p. New short URL won't be generated when URL title hasn't been changed and the custom field isn't empty, or when article is saved with status other than _live_ or _sticky_.
 
-p. All generated links will follow your Bitly accounts preferences, including your custom domain or Bitly's preferred domain.
+p. All generated links will follow your Bitly account's preferences, including your custom domain or preferred domain.
 
-p. If requesting a short link form Bitly fails due to connection error, or because Bitly's servers are temporarily unreachable, a new request is sent when the article is saved again. You will notice if the request has been successful if there is a shortened link in the custom field.
+p. If requesting a short link from Bitly fails due to connection error, or because Bitly's servers are temporarily unreachable, a new request is sent when the article is saved again. You will notice if the request has been successful when there is a shortened link in the custom field.
 
-p. The link that the plugin will shorten is the article permanent link, the real location of the individual article page that Textpattern responds to. It's the same location as where the _View_ link points on the admin-side _Write_ and _Articles_ panes.
+p. The link that the plugin will shorten is the article permanent link, the real location of the individual article page that Textpattern responds to. It's the same location as where the _View_ link points on admin-side _Write_ and _Articles_ panes.
 
 h3(#displaying-links). Displaying links
 
 p. Due to the fact that a "custom field":http://textpattern.net/wiki/index.php?title=custom_field is used to store the shortened links, it's pretty easy to display that link in your public-side page templates.
 
 bc. <txp:if_custom_field name="short_url">
-	<a href="<txp:custom_field name="short_url" />"><txp:custom_field name="short_url" /></a>
+	<a href="<txp:custom_field name="short_url" />">
+		<txp:custom_field name="short_url" />
+	</a>
+<txp:else />
+	No short link.
 </txp:if_custom_field>
 
-For example the above snippet would display shortened Bitly link when placed to "article form":http://textpattern.net/wiki/index.php?title=Forms or "context":http://textpattern.net/wiki/index.php?title=Textpattern:_Context_In_Depth. The @short_url@ is the name of the custom field.
+p. The above snippet would display shortened Bitly link when placed to "article form":http://textpattern.net/wiki/index.php?title=Forms or "context":http://textpattern.net/wiki/index.php?title=Textpattern:_Context_In_Depth. When no link is available _"No short link"_ message is shown. The @short_url@ is the name of the custom field.
 
 h3(#changelog). Changelog
+
+p. *Version 0.2*
+
+* Changed: Preference section's heading now uses title case, and option labels sentence case.
+* Changed: Now picks up new custom fields from POST data.
+* "Stef":http://forum.textpattern.com/profile.php?id=8181, "Markus":http://forum.textpattern.com/profile.php?id=9144, thank you for suggestions.
 
 p. *Version 0.1*
 

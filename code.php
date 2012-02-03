@@ -1,7 +1,7 @@
 <?php	##################
 	#
 	#	rah_bitly-plugin for Textpattern
-	#	version 0.1
+	#	version 0.2
 	#	by Jukka Svahn
 	#	http://rahforum.biz
 	#
@@ -57,8 +57,8 @@
 		
 		foreach(
 			array(
-				'rah_bitly' => 'Bitly integration',
-				'rah_bitly_login' => 'Bitly Login',
+				'rah_bitly' => 'Bitly Integration',
+				'rah_bitly_login' => 'Bitly login',
 				'rah_bitly_apikey' => 'API key',
 				'rah_bitly_field' => 'Store in custom field'
 			) as $string => $translation
@@ -66,7 +66,7 @@
 			if(!isset($textarray[$string]))
 				$textarray[$string] = $translation;
 		
-		$version = '0.1';
+		$version = '0.2';
 		
 		if(
 			isset($prefs['rah_bitly_version']) &&
@@ -275,10 +275,32 @@ EOF;
 		$out = array();
 		$out[''] = gTxt('none');
 		
-		foreach(getCustomFields() as $id => $label)
+		foreach(rah_bitly_getcustomfields() as $id => $label)
 			$out[$id] = htmlspecialchars( $id . ' : ' . $label);
 		
 		return selectInput($name, $out, $val, '', '', $name);
+	}
+
+/**
+	Get custom fields. Core's getCustomFields() with ability to pick new fields from POST data.
+	@return array List of custom fields.
+*/
+
+	function rah_bitly_getcustomfields() {
+		global $prefs;
+
+		$cfs = preg_grep('/^custom_\d+_set/', array_keys($prefs));
+		$out = array();
+
+		foreach($cfs as $name) {
+			preg_match('/(\d+)/', $name, $match);
+			$newname = ps($name);
+			if(!empty($prefs[$name]) || !empty($newname)) {
+				$out[$match[1]] = $newname ? $newname : $prefs[$name];
+			}
+		}
+
+		return $out;
 	}
 
 /**
