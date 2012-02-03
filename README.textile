@@ -1,26 +1,13 @@
 h1. rah_bitly
 
-p. Give articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when an article is published and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface. Adds zero more steps to article publishing.
+p. Give "Textpattern":http://www.textpattern.com's articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when an article is published and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface. Adds zero more steps to article publishing.
 
-* Version: 0.3
-* Updated: 2011/12/05 6:35 PM UTC
-
-h3. Table of Contents
-
-* "List of features":#list-of-features
-* "Requirements":#requirements
-* "Installation":#installation
-* "Configuring":#configuring
-* "Generating links":#inner-workings
-* "Displaying links":#displaying-links
-* "Changelog":#changelog
-
-h3(#list-of-features). List of features
+h2. List of features
 
 * Automatically generate shortened links for articles using "Bitly":http://bit.ly service.
 * Easy to set up, easy to use.
 
-h3(#requirements). Requirements
+h2. Requirements
 
 p. Rah_bitly's minimum requirements:
 
@@ -32,7 +19,7 @@ p. Rah_bitly's minimum requirements:
 
 Most servers, including shared hosting spaces, should be able to run *rah_bitly* just fine as long as Textpattern v4.4.1 or newer is installed.
 
-h3(#installation). Installation
+h2. Installation
 
 p. The usual plugin installation method is used by rah_bitly.
 
@@ -40,7 +27,7 @@ p. The usual plugin installation method is used by rah_bitly.
 # Start the automated setup process by clicking the _Upload_ button next to the field.
 # After the initial setup is done, active the plugin. Look for rah_bitly in the list of plugins and click the row's _Active_ column's link to active.
 
-h3(#configuring). Configuring
+h2. Configuring
 
 p. To start using rah_bitly you will first need to define your _Bitly login_,  _API key_ and the "custom field":http://textpattern.net/wiki/index.php?title=custom_field you want to use to store shortened links.
 
@@ -50,7 +37,7 @@ p. Setting the preferences is easy. You can find all you need in Textpattern's "
 * *API key* is your API key. You can find your API key from your Bitly account's settings page.
 * *Store in custom field* is the custom field that will be used to store shortened links.
 
-h3(#inner-workings). Generating links
+h2. Generating links
 
 p. Bitly links are generated for an article when one of the three conditions is met.
 
@@ -66,7 +53,7 @@ p. If requesting a short link from Bitly fails due to connection error, or becau
 
 p. The link that the plugin will shorten is the article's permanent link, the real location of the individual article page that Textpattern responds to. It's the same location as where the _View_ link points on admin-side _Write_ and _Articles_ tabs.
 
-h3(#displaying-links). Displaying links
+h2. Displaying links
 
 p. Displaying Bitly links on your page templates and articles is easy and customizable due to the fact that a "custom field":http://textpattern.net/wiki/index.php?title=custom_field is used to store the shortened links.
 
@@ -80,19 +67,19 @@ bc. <txp:if_custom_field name="short_url">
 
 p. The above snippet would display shortened Bitly link when placed to article "form":http://textpattern.net/wiki/index.php?title=Forms or "context":http://textpattern.net/wiki/index.php?title=Textpattern:_Context_In_Depth. When no link is available _"No short link"_ message is shown. The @short_url@ is the name of the custom field.
 
-h3(#changelog). Changelog
+h2. Changelog
 
-p. *Version 0.3*
+h3. Version 0.3 - 2011/12/05
 
 * Changed: Now uses Textpattern's @script_js()@ to output JavaScript blocks.
 * Improved: Escape URLs returned by Bitly so that it can not break JavaScript string. This is to prevent potential JavaScript injections.
 
-p. *Version 0.2*
+h3. Version 0.2 - 2011/07/21
 
 * Changed: Preference section's heading now uses title case, and option labels sentence case.
 * Changed: Now picks up new custom fields from POST data.
 * "Stef":http://forum.textpattern.com/profile.php?id=8181, "Markus":http://forum.textpattern.com/profile.php?id=9144, thank you for suggestions.
 
-p. *Version 0.1*
+h3. Version 0.1 - 2011/07/20
 
 * Initial release.
