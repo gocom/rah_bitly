@@ -1,0 +1,6 @@
+#@admin
+#Default language, en-us, en-gb
+rah_bitly => Bitly Integration
+rah_bitly_login => Bitly login
+rah_bitly_apikey => API key
+rah_bitly_field => Store in custom field

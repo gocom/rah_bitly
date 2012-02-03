@@ -1,71 +1,55 @@
-<?php	##################
-	#
-	#	rah_bitly-plugin for Textpattern
-	#	version 0.3
-	#	by Jukka Svahn
-	#	http://rahforum.biz
-	#
-	#	Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
-	#	Licensed under GNU Genral Public License version 2
-	#	http://www.gnu.org/licenses/gpl-2.0.html
-	#
-	##################
+<?php
+
+/**
+ * Rah_bitly plugin for Textpattern CMS.
+ *
+ * @author Jukka Svahn
+ * @date 2011-
+ * @license GNU GPLv2
+ * @link http://rahforum.biz/plugins/rah_bitly
+ *
+ * Requires Textpattern v4.4.1 or newer.
+ * 
+ * Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
+ * Licensed under GNU Genral Public License version 2
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 	if(@txpinterface == 'admin') {
 		rah_bitly_install();
-		add_privs('plugin_prefs.rah_bitly','1,2');
-		register_callback('rah_bitly_prefs','plugin_prefs.rah_bitly');
-		register_callback('rah_bitly_install','plugin_lifecycle.rah_bitly');
-		register_callback('rah_bitly','article','edit',1);
-		register_callback('rah_bitly','article','publish',1);
-		register_callback('rah_bitly','article','create',1);
-		register_callback('rah_bitly','article','save',1);
-		register_callback('rah_bitly','article','edit',0);
-		register_callback('rah_bitly','article','publish',0);
-		register_callback('rah_bitly','article','create',0);
-		register_callback('rah_bitly','article','save',0);
+		add_privs('plugin_prefs.rah_bitly', '1,2');
+		register_callback('rah_bitly_prefs', 'plugin_prefs.rah_bitly');
+		register_callback('rah_bitly_install', 'plugin_lifecycle.rah_bitly');
+		register_callback('rah_bitly', 'article', 'edit', 1);
+		register_callback('rah_bitly', 'article', 'publish', 1);
+		register_callback('rah_bitly', 'article', 'create', 1);
+		register_callback('rah_bitly', 'article', 'save', 1);
+		register_callback('rah_bitly', 'article', 'edit', 0);
+		register_callback('rah_bitly', 'article', 'publish', 0);
+		register_callback('rah_bitly', 'article', 'create', 0);
+		register_callback('rah_bitly', 'article', 'save', 0);
 	}
 
 /**
-	The unified installer and uninstaller
-	@param $event string Admin-side event.
-	@param $step string Admin-side, plugin-lifecycle step.
-*/
+ * The unified installer and uninstaller
+ * @param string $event Admin-side event.
+ * @param string $step Admin-side, plugin-lifecycle step.
+ */
 
-	function rah_bitly_install($event='',$step='') {
+	function rah_bitly_install($event='', $step='') {
 		
-		/*
-			Uninstall if uninstalling the
-			plugin
-		*/
+		global $prefs;
 		
 		if($step == 'deleted') {
 			
 			safe_delete(
 				'txp_prefs',
-				"name like 'rah_bitly_%'"
+				"name like 'rah\_bitly\_%'"
 			);
 			
 			return;
 		}
-		
-		global $prefs, $textarray;
-		
-		/*
-			Make sure language strings are set
-		*/
-		
-		foreach(
-			array(
-				'rah_bitly' => 'Bitly Integration',
-				'rah_bitly_login' => 'Bitly login',
-				'rah_bitly_apikey' => 'API key',
-				'rah_bitly_field' => 'Store in custom field'
-			) as $string => $translation
-		)
-			if(!isset($textarray[$string]))
-				$textarray[$string] = $translation;
-		
+
 		$version = '0.3';
 		
 		if(
@@ -104,21 +88,17 @@
 			$position++;
 		}
 		
-		/*
-			Set version
-		*/
-		
 		set_pref('rah_bitly_version',$version,'rah_bitly',2,'',0);
 		$prefs['rah_bitly_version'] = $version;
 	}
 
 /**
-	Hook to article saving process and update bitly short URLs
-	@param $event string Admin-side callback event
-	@param $step string Admin-side callback step
-*/
+ * Hook to article saving process and update bitly short URLs
+ * @param string $event Admin-side callback event
+ * @param string $step Admin-side callback step
+ */
 
-	function rah_bitly($event='',$step='') {
+	function rah_bitly($event='', $step='') {
 		
 		global $prefs;
 		
@@ -208,11 +188,11 @@
 	}
 
 /**
-	Fetches the bitly short URL
-	@param $permlink string The long URL to shorten
-	@param $timeout in Timeout in seconds
-	@return string The shortened URL, false on failure.
-*/
+ * Fetches the bitly short URL
+ * @param string $permlink The long URL to shorten
+ * @param int $timeout Timeout in seconds
+ * @return string The shortened URL, false on failure.
+ */
 
 	function rah_bitly_fetch($permlink, $timeout=10) {
 		
@@ -230,10 +210,9 @@
 		;
 		
 		/*
-			If cURL isn't available,
-			use file_get_contents if possible
+			If cURL isn't available, try file_get_contnets instead
 		*/
-			
+		
 		if(!function_exists('curl_init')) {
 			
 			if((@$fopen = ini_get('allow_url_fopen')) && !$fopen)
@@ -262,26 +241,26 @@
 	}
 
 /**
-	Lists all available custom fields
-	@param $name string Preference field's name.
-	@param $val string Current value.
-	@return string HTML select field.
-*/
+ * Lists all available custom fields
+ * @param string $name Preference field's name.
+ * @param string $val Current value.
+ * @return string HTML select field.
+ */
 
 	function rah_bitly_fields($name, $val) {
 		$out = array();
 		$out[''] = gTxt('none');
 		
 		foreach(rah_bitly_getcustomfields() as $id => $label)
-			$out[$id] = htmlspecialchars( $id . ' : ' . $label);
+			$out[$id] = $id . ' : ' . $label;
 		
 		return selectInput($name, $out, $val, '', '', $name);
 	}
 
 /**
-	Get custom fields. Core's getCustomFields() with added ability to pick new fields from POST data.
-	@return array List of custom fields.
-*/
+ * Get custom fields. Core's getCustomFields() with added ability to pick new fields from POST data.
+ * @return array List of custom fields.
+ */
 
 	function rah_bitly_getcustomfields() {
 		global $prefs;
@@ -301,8 +280,8 @@
 	}
 
 /**
-	Redirect to the admin-side interface
-*/
+ * Redirect to the admin-side interface
+ */
 
 	function rah_bitly_prefs() {
 		header('Location: ?event=prefs&step=advanced_prefs#prefs-rah_bitly_login');
