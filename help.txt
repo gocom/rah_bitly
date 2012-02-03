@@ -1,9 +1,9 @@
 h1. rah_bitly
 
-p. Give articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when article is posted, or modified, and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface, adds zero more steps to article publishing.
+p. Give articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when an article is published and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface. Adds zero more steps to article publishing.
 
-* Version: 0.2
-* Updated: 2011/07/21 11:55 AM UTC
+* Version: 0.3
+* Updated: 2011/12/05 6:35 PM UTC
 
 h3. Table of Contents
 
@@ -37,38 +37,38 @@ h3(#installation). Installation
 p. The usual plugin installation method is used by rah_bitly.
 
 # Download, and copy and paste the plugin code to the _Install plugin_ field found in your Textpattern installation's _Plugins_ interface (TXP / Admin / Plugins).
-# Start the automated setup process by click _Upload_ button next to the field.
-# After the initial setup is done, active the plugin. Look for rah_bitly in the list of plugins and click the row's _Active_ columns link to active the it.
-
-p. Now all is done and the plugin has been installed.
+# Start the automated setup process by clicking the _Upload_ button next to the field.
+# After the initial setup is done, active the plugin. Look for rah_bitly in the list of plugins and click the row's _Active_ column's link to active.
 
 h3(#configuring). Configuring
 
-p. To start using rah_bitly you will first need to define your _Bitly login_,  _API key_ and the "custom field":http://textpattern.net/wiki/index.php?title=custom_field you want to use to store the shortened link.
+p. To start using rah_bitly you will first need to define your _Bitly login_,  _API key_ and the "custom field":http://textpattern.net/wiki/index.php?title=custom_field you want to use to store shortened links.
 
-p. Setting the preferences is easy. You can find all you need in Textpattern's "Advanced Preferences":http://textpattern.net/wiki/index.php?title=Advanced_Preferences (TXP/Admin/Preferences/Admin), neatly organized under _Bitly integration_. Following preferences will be present.
+p. Setting the preferences is easy. You can find all you need in Textpattern's "Advanced Preferences":http://textpattern.net/wiki/index.php?title=Advanced_Preferences (TXP/Admin/Preferences/Admin), neatly organized under _Bitly integration_ section. Following three options will be present.
 
-p. *Bitly login* is where your login id to "Bitly":http://bit.ly service would go. *API key* is your API key. You can find your API key from your Bitly account's settings panel. *Store in custom field* is the custom field that will be used to store the shortened link.
+* *Bitly login* is where your login id to "Bitly":http://bit.ly service would go.
+* *API key* is your API key. You can find your API key from your Bitly account's settings page.
+* *Store in custom field* is the custom field that will be used to store shortened links.
 
 h3(#inner-workings). Generating links
 
-p. Bitly links are generated for an article when one of the couple conditions is met.
+p. Bitly links are generated for an article when one of the three conditions is met.
 
-* When the article is published (re: saved) with _live_ or _sticky_ status for the first time.
-* When the URL title is modified and the article is still in _live_ or _sticky_ state.
-* When the custom field used to store the link is empty and article is saved with _live_ or _sticky_ status.
+* When the article is published.
+* When already published article's URL title is modified.
+* When the custom field used to store the link is emptied.
 
-p. New short URL won't be generated when URL title hasn't been changed and the custom field isn't empty, or when article is saved with status other than _live_ or _sticky_.
+p. All three conditions only apply while the article is in, or is saved with, _live_ or _sticky_ status. Short links won't be generated for unpublished articles.
 
 p. All generated links will follow your Bitly account's preferences, including your custom domain or preferred domain.
 
 p. If requesting a short link from Bitly fails due to connection error, or because Bitly's servers are temporarily unreachable, a new request is sent when the article is saved again. You will notice if the request has been successful when there is a shortened link in the custom field.
 
-p. The link that the plugin will shorten is the article permanent link, the real location of the individual article page that Textpattern responds to. It's the same location as where the _View_ link points on admin-side _Write_ and _Articles_ panes.
+p. The link that the plugin will shorten is the article's permanent link, the real location of the individual article page that Textpattern responds to. It's the same location as where the _View_ link points on admin-side _Write_ and _Articles_ tabs.
 
 h3(#displaying-links). Displaying links
 
-p. Due to the fact that a "custom field":http://textpattern.net/wiki/index.php?title=custom_field is used to store the shortened links, it's pretty easy to display that link in your public-side page templates.
+p. Displaying Bitly links on your page templates and articles is easy and customizable due to the fact that a "custom field":http://textpattern.net/wiki/index.php?title=custom_field is used to store the shortened links.
 
 bc. <txp:if_custom_field name="short_url">
 	<a href="<txp:custom_field name="short_url" />">
@@ -78,9 +78,14 @@ bc. <txp:if_custom_field name="short_url">
 	No short link.
 </txp:if_custom_field>
 
-p. The above snippet would display shortened Bitly link when placed to "article form":http://textpattern.net/wiki/index.php?title=Forms or "context":http://textpattern.net/wiki/index.php?title=Textpattern:_Context_In_Depth. When no link is available _"No short link"_ message is shown. The @short_url@ is the name of the custom field.
+p. The above snippet would display shortened Bitly link when placed to article "form":http://textpattern.net/wiki/index.php?title=Forms or "context":http://textpattern.net/wiki/index.php?title=Textpattern:_Context_In_Depth. When no link is available _"No short link"_ message is shown. The @short_url@ is the name of the custom field.
 
 h3(#changelog). Changelog
+
+p. *Version 0.3*
+
+* Changed: Now uses Textpattern's @script_js()@ to output JavaScript blocks.
+* Improved: Escape URLs returned by Bitly so that it can not break JavaScript string. This is to prevent potential JavaScript injections.
 
 p. *Version 0.2*
 

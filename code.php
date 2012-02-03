@@ -1,7 +1,7 @@
 <?php	##################
 	#
 	#	rah_bitly-plugin for Textpattern
-	#	version 0.2
+	#	version 0.3
 	#	by Jukka Svahn
 	#	http://rahforum.biz
 	#
@@ -66,7 +66,7 @@
 			if(!isset($textarray[$string]))
 				$textarray[$string] = $translation;
 		
-		$version = '0.2';
+		$version = '0.3';
 		
 		if(
 			isset($prefs['rah_bitly_version']) &&
@@ -200,13 +200,10 @@
 		}
 		
 		if(isset($uri) && !empty($uri)) {
-			echo <<<EOF
-				<script type="text/javascript">
-					<!--
-						$('input[name="custom_{$prefs['rah_bitly_field']}"]').val('$uri');
-					-->
-				</script>
-EOF;
+			echo 
+				script_js(
+					'$(\'input[name="custom_'.$prefs['rah_bitly_field'].'"]\').val("'.escape_js($uri).'");'
+				);
 		}
 	}
 
@@ -266,12 +263,12 @@ EOF;
 
 /**
 	Lists all available custom fields
-	@param $name string Preferences field's name.
-	@param $val string Currently save value
+	@param $name string Preference field's name.
+	@param $val string Current value.
 	@return string HTML select field.
 */
 
-	function rah_bitly_fields($name,$val) {
+	function rah_bitly_fields($name, $val) {
 		$out = array();
 		$out[''] = gTxt('none');
 		
@@ -282,7 +279,7 @@ EOF;
 	}
 
 /**
-	Get custom fields. Core's getCustomFields() with ability to pick new fields from POST data.
+	Get custom fields. Core's getCustomFields() with added ability to pick new fields from POST data.
 	@return array List of custom fields.
 */
 
