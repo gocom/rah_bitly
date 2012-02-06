@@ -31,7 +31,7 @@
 	}
 
 /**
- * The unified installer and uninstaller
+ * Installer
  * @param string $event Admin-side event.
  * @param string $step Admin-side, plugin-lifecycle step.
  */
@@ -93,17 +93,14 @@
 	}
 
 /**
- * Hook to article saving process and update bitly short URLs
- * @param string $event Admin-side callback event
- * @param string $step Admin-side callback step
+ * Hooks to article saving process and update bitly short URLs
  */
 
-	function rah_bitly($event='', $step='') {
+	function rah_bitly() {
 		
 		global $prefs;
 		
 		if(
-			!isset($prefs['rah_bitly_login']) ||
 			empty($prefs['rah_bitly_login']) ||
 			empty($prefs['rah_bitly_apikey']) ||
 			empty($prefs['rah_bitly_field'])
@@ -113,7 +110,7 @@
 		static $old = array();
 		static $updated = false;
 		
-		$id = isset($GLOBALS['ID']) && !empty($GLOBALS['ID']) ? $GLOBALS['ID'] : ps('ID');
+		$id = !empty($GLOBALS['ID']) ? $GLOBALS['ID'] : ps('ID');
 		
 		if(!$id || ps('_txp_token') != form_token() || ps('Status') < 4){
 			$old = array('permlink' => NULL, 'status' => NULL);
