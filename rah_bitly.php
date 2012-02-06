@@ -112,7 +112,7 @@
 		
 		$id = !empty($GLOBALS['ID']) ? $GLOBALS['ID'] : ps('ID');
 		
-		if(!$id || ps('_txp_token') != form_token() || ps('Status') < 4){
+		if(!$id || ps('_txp_token') != form_token() || intval(ps('Status')) < 4){
 			$old = array('permlink' => NULL, 'status' => NULL);
 			return;
 		}
@@ -136,9 +136,7 @@
 			Clear the permlink cache
 		*/
 		
-		unset(
-			$GLOBALS['permlinks'][$id]
-		);
+		unset($GLOBALS['permlinks'][$id]);
 		
 		/*
 			If permlink is different than the old one,
@@ -166,7 +164,7 @@
 				
 				safe_update(
 					'textpattern',
-					'custom_'.$prefs['rah_bitly_field']."='".doSlash($uri)."'",
+					'custom_'.intval($prefs['rah_bitly_field'])."='".doSlash($uri)."'",
 					"ID='".doSlash($id)."'"
 				);
 				
@@ -176,7 +174,7 @@
 			$updated = true;
 		}
 		
-		if(isset($uri) && !empty($uri)) {
+		if(!empty($uri)) {
 			echo 
 				script_js(
 					'$(\'input[name="custom_'.$prefs['rah_bitly_field'].'"]\').val("'.escape_js($uri).'");'
