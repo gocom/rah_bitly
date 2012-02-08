@@ -143,7 +143,7 @@
 			generate a new
 		*/
 		
-		if(callback_event('rah_bitly.update'))
+		if(callback_event('rah_bitly.update') !== '')
 			return;
 		
 		if(
