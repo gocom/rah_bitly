@@ -88,7 +88,7 @@
 			$position++;
 		}
 		
-		set_pref('rah_bitly_version',$version,'rah_bitly',2,'',0);
+		set_pref('rah_bitly_version', $version, 'rah_bitly', 2, '', 0);
 		$prefs['rah_bitly_version'] = $version;
 	}
 
@@ -139,9 +139,12 @@
 		unset($GLOBALS['permlinks'][$id]);
 		
 		/*
-			If permlink is different than the old one,
-			or if article is re/published generate a new
+			If permlink has changed or if article is published 
+			generate a new
 		*/
+		
+		if(callback_event('rah_bitly.update'))
+			return;
 		
 		if(
 			$updated == false && 
