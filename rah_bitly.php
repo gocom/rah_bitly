@@ -93,7 +93,7 @@
 	}
 
 /**
- * Hooks to article saving process and update bitly short URLs
+ * Hooks to article saving process and updates short URLs
  */
 
 	function rah_bitly() {
@@ -139,8 +139,7 @@
 		unset($GLOBALS['permlinks'][$id]);
 		
 		/*
-			If permlink has changed or if article is published 
-			generate a new
+			Generate a new if permlink has changed or if article is published
 		*/
 		
 		if(callback_event('rah_bitly.update') !== '')
@@ -186,7 +185,7 @@
 	}
 
 /**
- * Fetches the bitly short URL
+ * Fetches a Bitly short URL
  * @param string $permlink The long URL to shorten
  * @param int $timeout Timeout in seconds
  * @return string The shortened URL, false on failure.
@@ -208,7 +207,7 @@
 		;
 		
 		/*
-			If cURL isn't available, try file_get_contnets instead
+			If cURL isn't available, try file_get_contents instead
 		*/
 		
 		if(!function_exists('curl_init')) {
