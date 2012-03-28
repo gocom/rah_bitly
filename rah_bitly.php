@@ -16,27 +16,31 @@
  */
 
 	if(@txpinterface == 'admin') {
-		rah_bitly_install();
+		rah_bitly::install();
 		add_privs('plugin_prefs.rah_bitly', '1,2');
-		register_callback('rah_bitly_prefs', 'plugin_prefs.rah_bitly');
-		register_callback('rah_bitly_install', 'plugin_lifecycle.rah_bitly');
-		register_callback('rah_bitly', 'article', 'edit', 1);
-		register_callback('rah_bitly', 'article', 'publish', 1);
-		register_callback('rah_bitly', 'article', 'create', 1);
-		register_callback('rah_bitly', 'article', 'save', 1);
-		register_callback('rah_bitly', 'article', 'edit', 0);
-		register_callback('rah_bitly', 'article', 'publish', 0);
-		register_callback('rah_bitly', 'article', 'create', 0);
-		register_callback('rah_bitly', 'article', 'save', 0);
+		register_callback(array('rah_bitly', 'prefs'), 'plugin_prefs.rah_bitly');
+		register_callback(array('rah_bitly', 'install'), 'plugin_lifecycle.rah_bitly');
+		register_callback(array('rah_bitly', 'update'), 'article', 'edit', 1);
+		register_callback(array('rah_bitly', 'update'), 'article', 'publish', 1);
+		register_callback(array('rah_bitly', 'update'), 'article', 'create', 1);
+		register_callback(array('rah_bitly', 'update'), 'article', 'save', 1);
+		register_callback(array('rah_bitly', 'update'), 'article', 'edit', 0);
+		register_callback(array('rah_bitly', 'update'), 'article', 'publish', 0);
+		register_callback(array('rah_bitly', 'update'), 'article', 'create', 0);
+		register_callback(array('rah_bitly', 'update'), 'article', 'save', 0);
 	}
 
-/**
- * Installer
- * @param string $event Admin-side event.
- * @param string $step Admin-side, plugin-lifecycle step.
- */
+class rah_bitly {
+	
+	static public $version = '0.3';
 
-	function rah_bitly_install($event='', $step='') {
+	/**
+	 * Installer
+	 * @param string $event Admin-side event.
+	 * @param string $step Admin-side, plugin-lifecycle step.
+	 */
+
+	static public function install($event='', $step='') {
 		
 		global $prefs;
 		
@@ -49,12 +53,10 @@
 			
 			return;
 		}
-
-		$version = '0.3';
 		
 		if(
 			isset($prefs['rah_bitly_version']) &&
-			$prefs['rah_bitly_version'] == $version
+			$prefs['rah_bitly_version'] == self::$version
 		)
 			return;
 		
@@ -88,15 +90,15 @@
 			$position++;
 		}
 		
-		set_pref('rah_bitly_version', $version, 'rah_bitly', 2, '', 0);
-		$prefs['rah_bitly_version'] = $version;
+		set_pref('rah_bitly_version', self::$version, 'rah_bitly', 2, '', 0);
+		$prefs['rah_bitly_version'] = self::$version;
 	}
 
-/**
- * Hooks to article saving process and updates short URLs
- */
+	/**
+	 * Hooks to article saving process and updates short URLs
+	 */
 
-	function rah_bitly() {
+	static public function update() {
 		
 		global $prefs;
 		
@@ -155,7 +157,7 @@
 			)
 		) {
 			
-			$uri = rah_bitly_fetch($permlink);
+			$uri = self::fetch($permlink);
 			
 			if($uri) {
 				
@@ -184,14 +186,14 @@
 		}
 	}
 
-/**
- * Fetches a Bitly short URL
- * @param string $permlink The long URL to shorten
- * @param int $timeout Timeout in seconds
- * @return string The shortened URL, false on failure.
- */
+	/**
+	 * Fetches a Bitly short URL
+	 * @param string $permlink The long URL to shorten
+	 * @param int $timeout Timeout in seconds
+	 * @return string The shortened URL, false on failure.
+	 */
 
-	function rah_bitly_fetch($permlink, $timeout=10) {
+	static public function fetch($permlink, $timeout=10) {
 		
 		global $prefs;
 		
@@ -237,29 +239,12 @@
 		return $bitcode && strpos($bitcode, 'http') === 0 ? htmlspecialchars(trim($bitcode)) : false;
 	}
 
-/**
- * Lists all available custom fields
- * @param string $name Preference field's name.
- * @param string $val Current value.
- * @return string HTML select field.
- */
+	/**
+	 * Get custom fields. Core's getCustomFields() with added ability to pick new fields from POST data.
+	 * @return array List of custom fields.
+	 */
 
-	function rah_bitly_fields($name, $val) {
-		$out = array();
-		$out[''] = gTxt('none');
-		
-		foreach(rah_bitly_getcustomfields() as $id => $label)
-			$out[$id] = $id . ' : ' . $label;
-		
-		return selectInput($name, $out, $val, '', '', $name);
-	}
-
-/**
- * Get custom fields. Core's getCustomFields() with added ability to pick new fields from POST data.
- * @return array List of custom fields.
- */
-
-	function rah_bitly_getcustomfields() {
+	static public function getcustomfields() {
 		global $prefs;
 
 		$cfs = preg_grep('/^custom_\d+_set/', array_keys($prefs));
@@ -275,16 +260,34 @@
 
 		return $out;
 	}
+	
+	/**
+	 * Redirect to the admin-side interface
+	 */
 
-/**
- * Redirect to the admin-side interface
- */
-
-	function rah_bitly_prefs() {
+	static public function prefs() {
 		header('Location: ?event=prefs&step=advanced_prefs#prefs-rah_bitly_login');
 		echo 
 			'<p>'.n.
 			'	<a href="?event=prefs&amp;step=advanced_prefs#prefs-rah_bitly_login">'.gTxt('continue').'</a>'.n.
 			'</p>';
+	}
+}
+
+/**
+ * Lists all available custom fields
+ * @param string $name Preference field's name.
+ * @param string $val Current value.
+ * @return string HTML select field.
+ */
+
+	function rah_bitly_fields($name, $val) {
+		$out = array();
+		$out[''] = gTxt('none');
+		
+		foreach(rah_bitly::getcustomfields() as $id => $label)
+			$out[$id] = $id . ' : ' . $label;
+		
+		return selectInput($name, $out, $val, '', '', $name);
 	}
 ?>
