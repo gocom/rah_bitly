@@ -208,13 +208,9 @@ class rah_bitly {
 				'&format=txt'
 		;
 		
-		/*
-			If cURL isn't available, try file_get_contents instead
-		*/
-		
 		if(!function_exists('curl_init')) {
 			
-			if((@$fopen = ini_get('allow_url_fopen')) && !$fopen)
+			if(!@ini_get('allow_url_fopen'))
 				return false;
 			
 			$context = 
