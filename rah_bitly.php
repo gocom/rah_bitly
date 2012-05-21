@@ -171,25 +171,26 @@
 				);
 				
 				$_POST['custom_'.$prefs['rah_bitly_field']] = $uri;
-				if ($app_mode == 'async') {
-					$uri = escape_js($uri);
-					$js = <<<JS
-	$(document).ready(function(){
-		$("#custom-{$prefs['rah_bitly_field']}").val("{$uri}");
-	});
-JS;
-					send_script_response($js);
-				}
 			}
 			
 			$updated = true;
 		}
 		
 		if(!empty($uri)) {
-			echo 
-				script_js(
-					'$(\'input[name="custom_'.$prefs['rah_bitly_field'].'"]\').val("'.escape_js($uri).'");'
-				);
+			if ($app_mode == 'async') {
+				$uri = escape_js($uri);
+				$js = <<<JS
+	$(document).ready(function(){
+		$("#custom-{$prefs['rah_bitly_field']}").val("{$uri}");
+	});
+JS;
+				send_script_response($js);
+			} else {
+				echo
+					script_js(
+						'$(\'input[name="custom_'.$prefs['rah_bitly_field'].'"]\').val("'.escape_js($uri).'");'
+					);
+			}
 		}
 	}
 
