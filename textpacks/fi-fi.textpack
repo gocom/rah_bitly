@@ -1,0 +1,6 @@
+#@admin
+#@language fi-fi
+rah_bitly => Bitly integraatio
+rah_bitly_login => Bitly tunnus
+rah_bitly_apikey => API-avain
+rah_bitly_field => Tallennataan muokattavaan kenttään
