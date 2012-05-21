@@ -98,8 +98,8 @@
 
 	function rah_bitly() {
 		
-		global $prefs;
-		
+		global $prefs, $app_mode;
+
 		if(
 			empty($prefs['rah_bitly_login']) ||
 			empty($prefs['rah_bitly_apikey']) ||
@@ -171,6 +171,15 @@
 				);
 				
 				$_POST['custom_'.$prefs['rah_bitly_field']] = $uri;
+				if ($app_mode == 'async') {
+					$uri = escape_js($uri);
+					$js = <<<JS
+	$(document).ready(function(){
+		$("#custom-{$prefs['rah_bitly_field']}").val("{$uri}");
+	});
+JS;
+					send_script_response($js);
+				}
 			}
 			
 			$updated = true;
@@ -197,8 +206,8 @@
 		
 		if(!$permlink)
 			return;
-	
-		$uri = 
+
+		$uri =
 			'http://api.bitly.com/v3/shorten'.
 				'?login='.urlencode($prefs['rah_bitly_login']).
 				'&apiKey='.urlencode($prefs['rah_bitly_apikey']).
