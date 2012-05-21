@@ -27,7 +27,8 @@
 		register_callback(array('rah_bitly', 'update'), 'article', 'edit', 0);
 		register_callback(array('rah_bitly', 'update'), 'article', 'publish', 0);
 		register_callback(array('rah_bitly', 'update'), 'article', 'create', 0);
-		register_callback(array('rah_bitly', 'update'), 'article', 'save', 0);
+		register_callback(array('rah_bitly', 'update'), 'article_saved');
+		register_callback('rah_bitly_partials_meta', 'article_ui', 'partials_meta');
 	}
 
 class rah_bitly {
@@ -100,7 +101,7 @@ class rah_bitly {
 
 	static public function update() {
 		
-		global $prefs;
+		global $prefs, $app_mode;
 		
 		if(
 			empty($prefs['rah_bitly_login']) ||
@@ -178,7 +179,7 @@ class rah_bitly {
 			$updated = true;
 		}
 		
-		if(!empty($uri)) {
+		if($app_mode != 'async' && !empty($uri)) {
 			echo 
 				script_js(
 					'$(\'input[name="custom_'.$prefs['rah_bitly_field'].'"]\').val("'.escape_js($uri).'");'
@@ -199,8 +200,12 @@ class rah_bitly {
 		
 		if(!$permlink)
 			return;
-	
-		$uri = 
+
+		#
+		$permlink = 'http://example.com/#'.$permlink;
+		#
+
+		$uri =
 			'http://api.bitly.com/v3/shorten'.
 				'?login='.urlencode($prefs['rah_bitly_login']).
 				'&apiKey='.urlencode($prefs['rah_bitly_apikey']).
@@ -286,4 +291,17 @@ class rah_bitly {
 		
 		return selectInput($name, $out, $val, '', '', $name);
 	}
+
+/**
+ * Override partials meta for custom fields as we need to inject our short url each time the article is saved.
+ * @param string $event
+ * @param string $step
+ * @param array $rs
+ * @param array $partials
+ */
+	function rah_bitly_partials_meta($event, $step, &$rs, &$partials)
+	{
+		$partials['custom_fields'] = array ('mode' => PARTIAL_VOLATILE, 'selector' => '#custom_field_group');
+	}
+
 ?>
