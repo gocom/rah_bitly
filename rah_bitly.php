@@ -100,8 +100,8 @@ class rah_bitly {
 
 	static public function update() {
 		
-		global $prefs;
-		
+		global $prefs, $app_mode;
+
 		if(
 			empty($prefs['rah_bitly_login']) ||
 			empty($prefs['rah_bitly_apikey']) ||
@@ -179,10 +179,20 @@ class rah_bitly {
 		}
 		
 		if(!empty($uri)) {
-			echo 
-				script_js(
-					'$(\'input[name="custom_'.$prefs['rah_bitly_field'].'"]\').val("'.escape_js($uri).'");'
-				);
+			if ($app_mode == 'async') {
+				$uri = escape_js($uri);
+				$js = <<<JS
+	$(document).ready(function(){
+		$("#custom-{$prefs['rah_bitly_field']}").val("{$uri}");
+	});
+JS;
+				send_script_response($js);
+			} else {
+				echo
+					script_js(
+						'$(\'input[name="custom_'.$prefs['rah_bitly_field'].'"]\').val("'.escape_js($uri).'");'
+					);
+			}
 		}
 	}
 
@@ -261,7 +271,11 @@ class rah_bitly {
 	 * Redirect to the admin-side interface
 	 */
 
-	static public function prefs() {
+/**
+ * Redirect to the admin-side interface
+ */
+
+	function rah_bitly_prefs() {
 		header('Location: ?event=prefs&step=advanced_prefs#prefs-rah_bitly_login');
 		echo 
 			'<p>'.n.
