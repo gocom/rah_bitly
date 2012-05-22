@@ -72,7 +72,7 @@ h2. Changelog
 
 h3. Version 0.4 - upcoming
 
-* Added: Textpattern v4.5.0 compatibility.
+* Added: Textpattern v4.5.0 compatibility. Thank you, "Robert Wetzlmayr":https://github.com/rwetzlmayr.
 * Added: Finnish translation.
 * Fixed: A potential issue with uninstaller SQL statement's wildcards.
 * Changed: Textpacks aren't embedded to the code, but uses installer.
