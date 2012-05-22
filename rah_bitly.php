@@ -100,7 +100,7 @@ class rah_bitly {
 
 	static public function update() {
 		
-		global $prefs;
+		global $prefs, $app_mode;
 		
 		if(
 			empty($prefs['rah_bitly_login']) ||
@@ -179,10 +179,19 @@ class rah_bitly {
 		}
 		
 		if(!empty($uri)) {
-			echo 
-				script_js(
-					'$(\'input[name="custom_'.$prefs['rah_bitly_field'].'"]\').val("'.escape_js($uri).'");'
-				);
+			
+			$js = 
+				'$(document).ready(function(){'.
+					'$(\'input[name="custom_'.$prefs['rah_bitly_field'].'"]\').val("'.escape_js($uri).'");'.
+				'});';
+			
+			if($app_mode == 'async') {
+				send_script_response($js);
+			}
+			
+			else {
+				echo script_js($js);
+			}
 		}
 	}
 
