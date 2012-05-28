@@ -84,7 +84,7 @@ class rah_bitly {
 					position=".$position
 				);
 				
-				$prefs['rah_bitly_'. $name] = '';
+				$prefs['rah_bitly_'.$name] = '';
 			}
 			
 			$position++;
