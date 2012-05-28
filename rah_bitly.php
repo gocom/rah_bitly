@@ -112,7 +112,7 @@ class rah_bitly {
 		static $old = array();
 		static $updated = false;
 		
-		$id = !empty($GLOBALS['ID']) ? $GLOBALS['ID'] : ps('ID');
+		$id = !empty($GLOBALS['ID']) ? $GLOBALS['ID'] : (int) ps('ID');
 		
 		if(!$id || ps('_txp_token') != form_token() || intval(ps('Status')) < 4){
 			$old = array('permlink' => NULL, 'status' => NULL);
