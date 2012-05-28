@@ -288,7 +288,7 @@ class rah_bitly {
 
 	function rah_bitly_fields($name, $val) {
 		$out = array();
-		$out[''] = gTxt('none');
+		$out[''] = '';
 		
 		foreach(rah_bitly::getcustomfields() as $id => $label)
 			$out[$id] = $id . ' : ' . $label;
