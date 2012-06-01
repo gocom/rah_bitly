@@ -1,6 +1,6 @@
 h1. rah_bitly
 
-p. Give "Textpattern":http://www.textpattern.com's articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when an article is published and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface. Adds zero more steps to article publishing.
+p. Give "Textpattern":http://www.textpattern.com's articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when an article is published and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface. Adds zero more steps to article publishing. Made by Jukka Svahn's tiny hand, using and loving Bitly.
 
 h2. List of features
 
@@ -18,7 +18,7 @@ p. Rah_bitly's minimum requirements:
 * "Bitly":http://bit.ly account.
 * End user: a modern web browser with JavaScript support.
 
-Most servers, including shared hosting spaces, should be able to run *rah_bitly* just fine as long as Textpattern v4.5.0 or newer is installed.
+p. Most servers, including shared hosting spaces, should be able to run *rah_bitly* just fine as long as Textpattern v4.5.0 or newer is installed.
 
 h2. Installation
 
@@ -34,9 +34,11 @@ p. To start using rah_bitly you will first need to define your _Bitly login_,  _
 
 p. Setting the preferences is easy. You can find all you need in Textpattern's "Advanced Preferences":http://textpattern.net/wiki/index.php?title=Advanced_Preferences (TXP/Admin/Preferences/Admin), neatly organized under _Bitly integration_ section. Following three options will be present.
 
-* *Bitly login* is where your login id to "Bitly":http://bit.ly service would go.
-* *API key* is your API key. You can find your API key from your Bitly account's settings page.
+* *Bitly login* is where your "Bitly":http://bit.ly username would go.
+* *API key* is your API key. "Request your own API key here.":http://bitly.com/a/your_api_key You can also find your API key from your Bitly account's settings page.
 * *Store in custom field* is the custom field that will be used to store shortened links.
+
+p. "Sir, what is my API key anyway?":http://bitly.com/a/your_api_key Click the link to get your own API key, or to verify your current credentials.
 
 h2. Generating links
 
