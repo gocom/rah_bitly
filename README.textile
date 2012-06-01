@@ -1,6 +1,6 @@
 h1. rah_bitly
 
-p. Give "Textpattern":http://www.textpattern.com's articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when an article is published and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface. Adds zero more steps to article publishing. Made by Jukka Svahn's tiny hand, using and loving Bitly.
+p. Give "Textpattern":http://www.textpattern.com's articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when an article is published and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface. Adds zero more steps to article publishing. Made by "Jukka Svahn's":http://twitter.com/gocom tiny hand, using and loving Bitly.
 
 h2. List of features
 
@@ -35,10 +35,10 @@ p. To start using rah_bitly you will first need to define your _Bitly login_,  _
 p. Setting the preferences is easy. You can find all you need in Textpattern's "Advanced Preferences":http://textpattern.net/wiki/index.php?title=Advanced_Preferences (TXP/Admin/Preferences/Admin), neatly organized under _Bitly integration_ section. Following three options will be present.
 
 * *Bitly login* is where your "Bitly":http://bit.ly username would go.
-* *API key* is your API key. "Request your own API key here.":http://bitly.com/a/your_api_key You can also find your API key from your Bitly account's settings page.
+* *API key* is your API key. "Get your own API key here":http://bitly.com/a/your_api_key. You can also find and reset your API key from your Bitly account's settings page.
 * *Store in custom field* is the custom field that will be used to store shortened links.
 
-p. "Sir, what is my API key anyway?":http://bitly.com/a/your_api_key Click the link to get your own API key, or to verify your current credentials.
+p. "Get your own API key":http://bitly.com/a/your_api_key. Click the link to find out your own API key and username.
 
 h2. Generating links
 
