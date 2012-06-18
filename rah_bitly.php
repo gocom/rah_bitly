@@ -54,10 +54,10 @@ class rah_bitly {
 			return;
 		}
 		
-		if(
-			isset($prefs['rah_bitly_version']) &&
-			$prefs['rah_bitly_version'] == self::$version
-		)
+		$current = isset($prefs['rah_bitly_version']) ?
+			(string) $prefs['rah_bitly_version'] : 'base';
+		
+		if($current === self::$version)
 			return;
 		
 		$position = 250;
