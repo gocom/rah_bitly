@@ -241,7 +241,7 @@ class rah_bitly {
 			curl_close($ch);
 		}
 		
-		return $bitcode && strpos($bitcode, 'http') === 0 ? htmlspecialchars(trim($bitcode)) : false;
+		return $bitcode && strpos($bitcode, 'http') === 0 ? txpspecialchars(trim($bitcode)) : false;
 	}
 
 	/**
