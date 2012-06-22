@@ -243,28 +243,6 @@ class rah_bitly {
 		
 		return $bitcode && strpos($bitcode, 'http') === 0 ? txpspecialchars(trim($bitcode)) : false;
 	}
-
-	/**
-	 * Get custom fields. Core's getCustomFields() with added ability to pick new fields from POST data.
-	 * @return array List of custom fields.
-	 */
-
-	static public function getcustomfields() {
-		global $prefs;
-
-		$cfs = preg_grep('/^custom_\d+_set/', array_keys($prefs));
-		$out = array();
-
-		foreach($cfs as $name) {
-			preg_match('/(\d+)/', $name, $match);
-			$newname = ps($name);
-			if(!empty($prefs[$name]) || !empty($newname)) {
-				$out[$match[1]] = $newname ? $newname : $prefs[$name];
-			}
-		}
-
-		return $out;
-	}
 	
 	/**
 	 * Redirect to the admin-side interface
@@ -290,7 +268,7 @@ class rah_bitly {
 		$out = array();
 		$out[''] = '';
 		
-		foreach(rah_bitly::getcustomfields() as $id => $label) {
+		foreach(getCustomFields() as $id => $label) {
 			$out[$id] = $id . ': ' . $label;
 		}
 		
