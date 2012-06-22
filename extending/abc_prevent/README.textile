@@ -1,0 +1,3 @@
+h1. Example plugin for rah_bitly
+
+p. This is an example plugin for rah_bitly. Showcases extending. The plugin will prevent generating bitly links for articles published in section named "private".

@@ -1,0 +1,17 @@
+<manifest>
+
+	<name>abc_bitly_prevent</name>
+	<description>An example plugin for rah_bitly</description>
+
+	<version>0.1</version>
+	<type>5</type>
+
+	<author>Jukka Svahn</author>
+	<author_uri>http://rahforum.biz</author_uri>
+
+	<order>5</order>
+	<flags>0</flags>
+
+	<help file="./README.textile" />
+
+</manifest>
