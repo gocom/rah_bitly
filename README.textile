@@ -79,6 +79,7 @@ h3. Version 0.4 - upcoming
 * Fixed: A potential issue with uninstaller SQL statement's wildcards.
 * Changed: Textpacks aren't embedded to the code, but uses installer.
 * Removed: Unnecessary HTML escaping in one of the preference controls.
+* Removed: Functionality added in v0.2 that allowed picking new custom fields from HTTP POST data. This is for future compatibility.
 
 h3. Version 0.3 - 2011/12/05
 
