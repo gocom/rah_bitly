@@ -269,7 +269,7 @@ class rah_bitly {
 		$out[''] = '';
 		
 		foreach(getCustomFields() as $id => $label) {
-			$out[$id] = $id . ': ' . $label;
+			$out[$id] = $label;
 		}
 		
 		return selectInput($name, $out, $val, '', '', $name);
