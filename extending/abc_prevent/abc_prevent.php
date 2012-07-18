@@ -18,12 +18,13 @@
 
 /**
  * Does validation prior to generating a new link
- * @return bool|string
  * @see ps()
  */
 
 	function abc_prevent() {
-		return ps('Section') == 'private' ? FALSE : '';
+		if(ps('Section') == 'private') {
+			rah_bitly::get()->permlink = false;
+		}
 	}
 
 ?>
