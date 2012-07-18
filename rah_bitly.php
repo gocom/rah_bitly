@@ -16,18 +16,54 @@
  */
 
 	if(@txpinterface == 'admin') {
-		rah_bitly::install();
-		add_privs('plugin_prefs.rah_bitly', '1,2');
-		register_callback(array('rah_bitly', 'prefs'), 'plugin_prefs.rah_bitly');
-		register_callback(array('rah_bitly', 'install'), 'plugin_lifecycle.rah_bitly');
-		register_callback(array('rah_bitly', 'update'), 'article', '', 1);
-		register_callback(array('rah_bitly', 'update'), 'article', 'article_saved');
-		register_callback(array('rah_bitly', 'update'), 'article', 'article_posted');
+		rah_bitly::get();
 	}
 
 class rah_bitly {
 	
 	static public $version = '0.3';
+	
+	/**
+	 * Stores instances
+	 */
+	
+	static public $instance = NULL;
+	
+	/**
+	 * @var string Article's current permlink
+	 */
+	
+	public $permlink;
+	
+	/**
+	 * @var string Article's previous permlink
+	 */
+	
+	private $prev_permlink;
+	
+	/**
+	 * @var int Article's previous status
+	 */
+	
+	private $prev_status;
+	
+	/**
+	 * @var string Bitly login
+	 */
+	
+	private $login;
+	
+	/**
+	 * @var string Bitly API key
+	 */
+	
+	private $apikey;
+	
+	/**
+	 * @var int Custom field ID
+	 */
+	
+	private $field;
 
 	/**
 	 * Installer
@@ -88,105 +124,124 @@ class rah_bitly {
 		set_pref('rah_bitly_version', self::$version, 'rah_bitly', 2, '', 0);
 		$prefs['rah_bitly_version'] = self::$version;
 	}
-
+	
 	/**
-	 * Hooks to article saving process and updates short URLs
+	 * Gets an instance
+	 * @return obj
 	 */
-
-	static public function update() {
+	
+	static public function get() {
+		if(self::$instance === NULL) {
+			self::$instance = new rah_bitly();
+		}
 		
-		global $prefs, $app_mode;
+		return self::$instance;
+	}
+	
+	/**
+	 * Constructor
+	 */
+	
+	public function __construct() {
+		self::install();
+		add_privs('plugin_prefs.'.__CLASS__, '1,2');
+		register_callback(array(__CLASS__, 'prefs'), 'plugin_prefs.'.__CLASS__);
+		register_callback(array(__CLASS__, 'install'), 'plugin_lifecycle.'.__CLASS__);
+		register_callback(array($this, 'initialize'), 'article', '', 1);
+	}
+	
+	/**
+	 * Initializes
+	 */
+	
+	public function initialize() {
 		
-		if(
-			empty($prefs['rah_bitly_login']) ||
-			empty($prefs['rah_bitly_apikey']) ||
-			empty($prefs['rah_bitly_field'])
-		)
-			return;
+		foreach(array('login', 'apikey', 'field') as $name) {
+			$this->$name = get_pref(__CLASS__.'_'.$name);
+		}
 		
-		static $old = array();
-		static $updated = false;
+		$this->field = (int) $this->field;
 		
-		$id = !empty($GLOBALS['ID']) ? $GLOBALS['ID'] : (int) ps('ID');
-		
-		if(!$id || ps('_txp_token') != form_token() || intval(ps('Status')) < 4){
-			$old = array('permlink' => NULL, 'status' => NULL);
+		if(!$this->login || !$this->apikey || !$this->field) {
 			return;
 		}
 		
 		include_once txpath.'/publish/taghandlers.php';
 		
-		/*
-			Get the old article permlink before anything is saved
-		*/
+		$this->previous_state();
+		register_callback(array($this, 'update'), 'article_saved');
+		register_callback(array($this, 'update'), 'article_posted');
+	}
+	
+	/**
+	 * Fetches old article data
+	 */
+	 
+	public function previous_state() {
 		
-		if(!$old) {
-			$old =
-				array(
-					'permlink' => permlinkurl_id($id),
-					'status' => fetch('Status', 'textpattern', 'ID', $id)
-				);
+		$id = (int) ps('ID');
+		
+		if(!$id) {
 			return;
 		}
 		
-		/*
-			Clear the permlink cache
-		*/
+		$this->prev_permlink = permlinkurl_id($id);
+		$this->prev_status = fetch('Status', 'textpattern', 'ID', $id);
+	}
+
+	/**
+	 * Hooks to article saving process and updates short URLs
+	 */
+
+	public function update($event, $step, $r) {
 		
-		unset($GLOBALS['permlinks'][$id]);
+		global $app_mode;
 		
-		/*
-			Generate a new if permlink has changed or if article is published
-		*/
+		$this->permlink = permlinkurl_id($r['ID']);
 		
-		if(callback_event('rah_bitly.update') !== '')
+		callback_event('rah_bitly.update');
+		
+		if(!$this->permlink || $r['Status'] < STATUS_LIVE) {
 			return;
+		}
 		
 		if(
-			$updated == false && 
-			($permlink = permlinkurl_id($id)) && 
-			(
-				$old['permlink'] != $permlink || 
-				!ps('custom_'.$prefs['rah_bitly_field']) || 
-				$old['status'] != ps('Status')
-			)
+			$this->prev_permlink !== $this->permlink ||
+			empty($r['custom_'.$this->field]) ||
+			$prev_status != $r['status']
 		) {
-			
-			$uri = self::fetch($permlink);
-			
-			if($uri) {
-				
-				$fields = getCustomFields();
-				
-				if(!isset($fields[$prefs['rah_bitly_field']]))
-					return;
-				
-				safe_update(
-					'textpattern',
-					'custom_'.intval($prefs['rah_bitly_field'])."='".doSlash($uri)."'",
-					"ID='".doSlash($id)."'"
-				);
-				
-				$_POST['custom_'.$prefs['rah_bitly_field']] = $uri;
-			}
-			
-			$updated = true;
+			$uri = $this->fetch($this->permlink);
 		}
 		
-		if(!empty($uri)) {
+		if(empty($uri)) {
+			return;
+		}
+		
+		$fields = getCustomFields();
+		
+		if(!isset($fields[$this->field])) {
+			return;
+		}
+		
+		safe_update(
+			'textpattern',
+			'custom_'.intval($this->field)."='".doSlash($uri)."'",
+			"ID='".doSlash($r['ID'])."'"
+		);
+		
+		$_POST['custom_'.$this->field] = $uri;
+		
+		$js = 
+			'$(document).ready(function(){'.
+				'$(\'input[name="custom_'.$this->field.'"]\').val("'.escape_js($uri).'");'.
+			'});';
+		
+		if($app_mode == 'async') {
+			send_script_response($js);
+		}
 			
-			$js = 
-				'$(document).ready(function(){'.
-					'$(\'input[name="custom_'.$prefs['rah_bitly_field'].'"]\').val("'.escape_js($uri).'");'.
-				'});';
-			
-			if($app_mode == 'async') {
-				send_script_response($js);
-			}
-			
-			else {
-				echo script_js($js);
-			}
+		else {
+			echo script_js($js);
 		}
 	}
 
@@ -194,20 +249,18 @@ class rah_bitly {
 	 * Fetches a Bitly short URL
 	 * @param string $permlink The long URL to shorten
 	 * @param int $timeout Timeout in seconds
-	 * @return string The shortened URL, false on failure.
+	 * @return string
 	 */
 
-	static public function fetch($permlink, $timeout=10) {
-		
-		global $prefs;
+	protected function fetch($permlink, $timeout=10) {
 		
 		if(!$permlink)
 			return;
 	
 		$uri = 
 			'http://api.bitly.com/v3/shorten'.
-				'?login='.urlencode($prefs['rah_bitly_login']).
-				'&apiKey='.urlencode($prefs['rah_bitly_apikey']).
+				'?login='.urlencode($this->login).
+				'&apiKey='.urlencode($this->apikey).
 				'&longUrl='.urlencode($permlink).
 				'&format=txt'
 		;
@@ -215,7 +268,7 @@ class rah_bitly {
 		if(!function_exists('curl_init')) {
 			
 			if(!@ini_get('allow_url_fopen'))
-				return false;
+				return;
 			
 			$context = 
 				stream_context_create(
@@ -236,7 +289,7 @@ class rah_bitly {
 			curl_close($ch);
 		}
 		
-		return $bitcode && strpos($bitcode, 'http') === 0 ? txpspecialchars(trim($bitcode)) : false;
+		return $bitcode && strpos($bitcode, 'http') === 0 ? txpspecialchars(trim($bitcode)) : '';
 	}
 	
 	/**
