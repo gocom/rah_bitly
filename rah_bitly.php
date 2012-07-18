@@ -20,14 +20,9 @@
 		add_privs('plugin_prefs.rah_bitly', '1,2');
 		register_callback(array('rah_bitly', 'prefs'), 'plugin_prefs.rah_bitly');
 		register_callback(array('rah_bitly', 'install'), 'plugin_lifecycle.rah_bitly');
-		register_callback(array('rah_bitly', 'update'), 'article', 'edit', 1);
-		register_callback(array('rah_bitly', 'update'), 'article', 'publish', 1);
-		register_callback(array('rah_bitly', 'update'), 'article', 'create', 1);
-		register_callback(array('rah_bitly', 'update'), 'article', 'save', 1);
-		register_callback(array('rah_bitly', 'update'), 'article', 'edit', 0);
-		register_callback(array('rah_bitly', 'update'), 'article', 'publish', 0);
-		register_callback(array('rah_bitly', 'update'), 'article', 'create', 0);
-		register_callback(array('rah_bitly', 'update'), 'article', 'save', 0);
+		register_callback(array('rah_bitly', 'update'), 'article', '', 1);
+		register_callback(array('rah_bitly', 'update'), 'article', 'article_saved');
+		register_callback(array('rah_bitly', 'update'), 'article', 'article_posted');
 	}
 
 class rah_bitly {
