@@ -259,7 +259,7 @@ class rah_bitly {
 		}
 		
 		$uri = 
-			'http://api.bitly.com/v3/shorten'.
+			'https://api-ssl.bitly.com/v3/shorten'.
 				'?login='.urlencode($this->login).
 				'&apiKey='.urlencode($this->apikey).
 				'&longUrl='.urlencode($permlink).
