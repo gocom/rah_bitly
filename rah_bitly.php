@@ -83,44 +83,30 @@ class rah_bitly {
 			return;
 		}
 		
-		$current = isset($prefs['rah_bitly_version']) ?
-			(string) $prefs['rah_bitly_version'] : 'base';
-		
-		if($current === self::$version)
+		if((string) get_pref(__CLASS__.'_version') === self::$version)
 			return;
 		
 		$position = 250;
 		
 		foreach(
 			array(
-				'login',
-				'apikey',
-				'field'
-			) as $name
+				'login' => array('text_input', ''),
+				'apikey' => array('text_input', ''),
+				'field' => array('rah_bitly_fields', ''),
+			) as $name => $val
 		) {
+			$n =  __CLASS__.'_'.$name;
 			
-			if(!isset($prefs['rah_bitly_'. $name])) {
-				$html = $name == 'field' ? 'rah_bitly_fields' : 'text_input';
-				
-				safe_insert(
-					'txp_prefs',
-					"prefs_id=1,
-					name='rah_bitly_".$name."',
-					val='',
-					type=1,
-					event='rah_bitly',
-					html='$html',
-					position=".$position
-				);
-				
-				$prefs['rah_bitly_'.$name] = '';
+			if(!isset($prefs[$n])) {
+				set_pref($n, $val[1], __CLASS__, PREF_ADVANCED, $val[0], $position);
+				$prefs[$n] = $val[1];
 			}
 			
 			$position++;
 		}
 		
-		set_pref('rah_bitly_version', self::$version, 'rah_bitly', 2, '', 0);
-		$prefs['rah_bitly_version'] = self::$version;
+		set_pref(__CLASS__.'_version', self::$version, __CLASS__, PREF_HIDDEN, '', PREF_PRIVATE);
+		$prefs[__CLASS__.'_version'] = self::$version;
 	}
 	
 	/**
