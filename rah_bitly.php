@@ -7,8 +7,6 @@
  * @date 2011-
  * @license GNU GPLv2
  * @link http://rahforum.biz/plugins/rah_bitly
- *
- * Requires Textpattern v4.4.1 or newer.
  * 
  * Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
  * Licensed under GNU Genral Public License version 2
