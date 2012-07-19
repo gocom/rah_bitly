@@ -296,13 +296,6 @@ class rah_bitly {
  */
 
 	function rah_bitly_fields($name, $val) {
-		$out = array();
-		$out[''] = '';
-		
-		foreach(getCustomFields() as $id => $label) {
-			$out[$id] = $label;
-		}
-		
-		return selectInput($name, $out, $val, '', '', $name);
+		return selectInput($name, getCustomFields(), $val, true, '', $name);
 	}
 ?>
