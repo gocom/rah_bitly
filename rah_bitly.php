@@ -254,40 +254,25 @@ class rah_bitly {
 
 	protected function fetch($permlink, $timeout=10) {
 		
-		if(!$permlink)
+		if(!$permlink || !function_exists('curl_init')) {
 			return;
-	
+		}
+		
 		$uri = 
 			'http://api.bitly.com/v3/shorten'.
 				'?login='.urlencode($this->login).
 				'&apiKey='.urlencode($this->apikey).
 				'&longUrl='.urlencode($permlink).
-				'&format=txt'
-		;
+				'&format=txt';
 		
-		if(!function_exists('curl_init')) {
-			
-			if(!@ini_get('allow_url_fopen'))
-				return;
-			
-			$context = 
-				stream_context_create(
-					array('http' => array('timeout' => $timeout))
-				);
-			
-			@$bitcode = file_get_contents($uri, 0, $context);
-		}
-		
-		else {
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $uri);
-			curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-			curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-			$bitcode = curl_exec($ch);
-			curl_close($ch);
-		}
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $uri);
+		curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+		$bitcode = curl_exec($ch);
+		curl_close($ch);
 		
 		return $bitcode && strpos($bitcode, 'http') === 0 ? txpspecialchars(trim($bitcode)) : '';
 	}

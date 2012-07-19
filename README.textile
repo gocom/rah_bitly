@@ -13,7 +13,7 @@ p. Rah_bitly's minimum requirements:
 
 * Textpattern CMS v4.5.0 or newer.
 * PHP5 or newer.
-** "cURL":http://php.net/manual/en/book.curl.php library or "allow_url_fopen":http://php.net/manual/en/filesystem.configuration.php set to true.
+** "cURL":http://php.net/manual/en/book.curl.php library.
 * Installed web server with internet connection and outgoing HTTP connections allowed.
 * "Bitly":http://bit.ly account.
 * End user: a modern web browser with JavaScript support.
@@ -80,6 +80,7 @@ h3. Version 0.4 - upcoming
 * Changed: Textpacks aren't embedded to the code, but uses installer.
 * Removed: Unnecessary HTML escaping in one of the preference controls.
 * Removed: Functionality added in v0.2 that allowed picking new custom fields from HTTP POST data. This is for future compatibility.
+* Removed: Dropped support to file_get_contents() and "allow_url_fopen":http://php.net/manual/en/filesystem.configuration.php. cURL is now required in favor of future compliance and move to oAuth.
 
 h3. Version 0.3 - 2011/12/05
 
