@@ -179,9 +179,9 @@ class rah_bitly {
 
 	public function update($event, $step, $r) {
 		
-		global $app_mode;
+		global $app_mode, $ID;
 		
-		$this->permlink = permlinkurl_id($r['ID']);
+		$this->permlink = permlinkurl_id($ID ? $ID : $r['ID']);
 		
 		callback_event('rah_bitly.update');
 		
