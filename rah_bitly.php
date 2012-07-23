@@ -171,6 +171,7 @@ class rah_bitly {
 		
 		$this->prev_permlink = permlinkurl_id($id);
 		$this->prev_status = fetch('Status', 'textpattern', 'ID', $id);
+		unset($GLOBALS['permlinks'][$id]);
 	}
 
 	/**
