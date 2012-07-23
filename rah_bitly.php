@@ -183,7 +183,7 @@ class rah_bitly {
 		
 		$this->permlink = permlinkurl_id($r['ID']);
 		
-		callback_event('rah_bitly.update');
+		callback_event('rah_bitly.update', '', false, $r);
 		
 		if(!$this->permlink || $r['Status'] < STATUS_LIVE) {
 			return;
