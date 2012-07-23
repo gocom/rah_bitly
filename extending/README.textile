@@ -4,7 +4,7 @@ p. This directory contains modules for rah_bitly.
 
 h2. Prevent
 
-p. Is a bare-bone example module. It prevents creating short links for any article published in section named _private_.
+p. This is an example plugin for rah_bitly which showcases extending. The plugin will prevent generating Bitly links for articles published in section which name starts with underscore (@_@).
 
 h2. Localhost
 
