@@ -1,3 +1,11 @@
 h1. Extending rah_bitly
 
-p. This directory contains plugins for rah_bitly.
+p. This directory contains modules for rah_bitly.
+
+h2. abc_prevent
+
+p. Is a bare-bone example module. It prevents creating short links for any article published in section named _private_.
+
+h2. Localhost
+
+p. Appends @http://example.com/#@ to the published short link's location. This makes a permanent link pointing to a local address publishable.
