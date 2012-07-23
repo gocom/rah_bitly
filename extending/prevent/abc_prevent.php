@@ -13,15 +13,14 @@
  */
 
 	if(@txpinterface == 'admin') {
-		register_callback('abc_prevent', 'rah_bitly.update');
+		register_callback('rah_bitly__prevent', 'rah_bitly.update');
 	}
 
 /**
  * Does validation prior to generating a new link
- * @see ps()
  */
 
-	function abc_prevent() {
+	function rah_bitly__prevent() {
 		if(ps('Section') == 'private') {
 			rah_bitly::get()->permlink = false;
 		}

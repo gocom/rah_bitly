@@ -2,7 +2,7 @@ h1. Extending rah_bitly
 
 p. This directory contains modules for rah_bitly.
 
-h2. abc_prevent
+h2. Prevent
 
 p. Is a bare-bone example module. It prevents creating short links for any article published in section named _private_.
 
