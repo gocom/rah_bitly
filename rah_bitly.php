@@ -37,7 +37,7 @@ class rah_bitly {
 	 * @var string Article's previous permlink
 	 */
 	
-	private $prev_permlink;
+	public $prev_permlink;
 	
 	/**
 	 * @var int Article's previous status
