@@ -1,6 +1,6 @@
 h1. rah_bitly
 
-p. Give "Textpattern":http://www.textpattern.com's articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when an article is published and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface. Adds zero more steps to article publishing. Made by "Jukka Svahn's":http://twitter.com/gocom tiny hand, using and loving Bitly.
+p. Gives "Textpattern":http://www.textpattern.com CMS' articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when an article is published and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface. Adds zero more steps to article publishing. Made by "Jukka Svahn's":http://twitter.com/gocom tiny hand, using and loving Bitly.
 
 h2. List of features
 
@@ -20,7 +20,7 @@ p. Rah_bitly's minimum requirements:
 
 p. Most servers, including shared hosting spaces, should be able to run *rah_bitly* just fine as long as Textpattern v4.5.0 or newer is installed.
 
-h2. Installation
+h2. Installing
 
 p. The usual plugin installation method is used by rah_bitly.
 
