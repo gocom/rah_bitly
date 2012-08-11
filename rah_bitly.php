@@ -13,9 +13,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-	if(@txpinterface == 'admin') {
-		rah_bitly::get();
-	}
+	rah_bitly::get();
 
 class rah_bitly {
 	
@@ -127,7 +125,6 @@ class rah_bitly {
 	 */
 	
 	public function __construct() {
-		self::install();
 		add_privs('plugin_prefs.'.__CLASS__, '1,2');
 		register_callback(array(__CLASS__, 'prefs'), 'plugin_prefs.'.__CLASS__);
 		register_callback(array(__CLASS__, 'install'), 'plugin_lifecycle.'.__CLASS__);
