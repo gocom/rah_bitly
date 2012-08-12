@@ -211,8 +211,6 @@ class rah_bitly {
 			"ID='".doSlash($r['ID'])."'"
 		);
 		
-		$_POST['custom_'.$this->field] = $uri;
-		
 		$js = 
 			'$(document).ready(function(){'.
 				'$(\'input[name="custom_'.$this->field.'"]\').val("'.escape_js($uri).'");'.
@@ -220,10 +218,6 @@ class rah_bitly {
 		
 		if($app_mode == 'async') {
 			send_script_response($js);
-		}
-			
-		else {
-			echo script_js($js);
 		}
 	}
 
