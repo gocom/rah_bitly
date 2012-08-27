@@ -2,12 +2,7 @@ h1. rah_bitly
 
 p. "Project page":http://rahforum.biz/plugins/rah_bitly | "Twitter":http://twitter.com/gocom | "GitHub":https://github.com/gocom/rah_bitly | "Support forum":http://forum.textpattern.com/viewtopic.php?id=36497 | "Donate":http://rahforum.biz/donate/rah_bitly
 
-p. Gives "Textpattern":http://www.textpattern.com CMS' articles tiny "Bitly":http://bitly.com powered short links. The links are generated automatically when an article is published and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface. Adds zero more steps to article publishing. Made by "Jukka Svahn's":http://twitter.com/gocom tiny hand, using and loving Bitly.
-
-h2. List of features
-
-* Automatically generate shortened links for articles using "Bitly":http://bit.ly service.
-* Easy to set up, easy to use.
+p. Gives "Textpattern":http://www.textpattern.com CMS' articles tiny "Bitly":http://bitly.com powered short links. These links are generated automatically when an article is published and stored in a custom field of your choosing. Easy to setup, just define your credentials via graphical user interface. Adds zero more steps to article publishing. Made by "Jukka Svahn's":http://twitter.com/gocom tiny hand, using and loving Bitly.
 
 h2. Requirements
 
