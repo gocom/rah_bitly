@@ -17,7 +17,7 @@
 
 class rah_bitly {
 	
-	static public $version = '0.3';
+	static public $version = '0.4';
 	
 	/**
 	 * Stores instances
