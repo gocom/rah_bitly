@@ -34,7 +34,7 @@ p. Setting the preferences is easy. You can find all you need in Textpattern's "
 
 * *Bitly login* is where your "Bitly":http://bit.ly username would go.
 * *API key* is your API key. "Get your own API key here":http://bitly.com/a/your_api_key. You can also find and reset your API key from your Bitly account's settings page.
-* *Store in custom field* is the custom field that will be used to store shortened links.
+* *Store in a custom field* is the custom field that will be used to store shortened links.
 
 h2. Generating links
 
