@@ -8,7 +8,7 @@ h2. Requirements
 
 p. Rah_bitly's minimum requirements:
 
-* Textpattern CMS v4.5.0 or newer.
+* Textpattern v4.5 or newer.
 * PHP 5.2 or newer.
 ** "cURL":http://php.net/manual/en/book.curl.php library.
 * Installed web server with internet connection and outgoing HTTP connections allowed.
