@@ -9,7 +9,7 @@ h2. Requirements
 p. Rah_bitly's minimum requirements:
 
 * Textpattern CMS v4.5.0 or newer.
-* PHP5 or newer.
+* PHP 5.2 or newer.
 ** "cURL":http://php.net/manual/en/book.curl.php library.
 * Installed web server with internet connection and outgoing HTTP connections allowed.
 * "Bitly":http://bit.ly account.
@@ -19,23 +19,22 @@ p. Most servers, including shared hosting spaces, should be able to run *rah_bit
 
 h2. Installing
 
-p. The usual plugin installation method is used by rah_bitly.
+p. Rah_bitly's installation follows the standard plugin installation steps.
 
-# Download, and copy and paste the plugin code to the _Install plugin_ field found in your Textpattern installation's _Plugins_ interface (TXP / Admin / Plugins).
-# Start the automated setup process by clicking the _Upload_ button next to the field.
-# After the initial setup is done, active the plugin. Look for rah_bitly in the list of plugins and click the row's _Active_ column's link to active.
+# Download the plugin installation code.
+# Copy and paste the installation code into the _Install plugin_ box of your Textpattern Plugin pane.
+# Run the automated setup.
+# After the setup is done, activate the plugin. Done.
 
 h2. Configuring
 
-p. To start using rah_bitly you will first need to define your _Bitly login_,  _API key_ and the "custom field":http://textpattern.net/wiki/index.php?title=custom_field you want to use to store shortened links.
+p. To start using rah_bitly you will first need to define your *Bitly login*,  *API key* and the "custom field":http://textpattern.net/wiki/index.php?title=custom_field you want to use to store shortened links.
 
-p. Setting the preferences is easy. You can find all you need in Textpattern's "Advanced Preferences":http://textpattern.net/wiki/index.php?title=Advanced_Preferences (TXP/Admin/Preferences/Admin), neatly organized under _Bitly integration_ section. Following three options will be present.
+p. Setting the preferences is easy. You can find all you need in Textpattern's "Advanced Preferences":http://textpattern.net/wiki/index.php?title=Advanced_Preferences panel, neatly organized under *Bitly integration* section. The following three options will be present.
 
 * *Bitly login* is where your "Bitly":http://bit.ly username would go.
 * *API key* is your API key. "Get your own API key here":http://bitly.com/a/your_api_key. You can also find and reset your API key from your Bitly account's settings page.
 * *Store in custom field* is the custom field that will be used to store shortened links.
-
-p. "Get your own API key":http://bitly.com/a/your_api_key. Click the link to find out your own API key and username.
 
 h2. Generating links
 
@@ -51,7 +50,7 @@ p. All generated links will follow your Bitly account's preferences, including y
 
 p. If requesting a short link from Bitly fails due to connection error, or because Bitly's servers are temporarily unreachable, a new request is sent when the article is saved again. You will notice if the request has been successful when there is a shortened link in the custom field.
 
-p. The link that the plugin will shorten is the article's permanent link, the real location of the individual article page that Textpattern responds to. It's the same location as where the _View_ link points on admin-side _Write_ and _Articles_ tabs.
+p. The link that the plugin will shorten is the article's permanent link, the real location of the individual article page that Textpattern responds to. It's the same location as where the _View_ link points on the "Write":http://textpattern.net/wiki/index.php?title=Write panel.
 
 h2. Displaying links
 
@@ -62,7 +61,7 @@ bc. <txp:if_custom_field name="short_url">
 		<txp:custom_field name="short_url" />
 	</a>
 <txp:else />
-	No short link.
+	<p>No short link.</p>
 </txp:if_custom_field>
 
 p. The above snippet would display shortened Bitly link when placed to article "form":http://textpattern.net/wiki/index.php?title=Forms or "context":http://textpattern.net/wiki/index.php?title=Textpattern:_Context_In_Depth. When no link is available _"No short link"_ message is shown. The @short_url@ is the name of the custom field.
