@@ -1,6 +1,6 @@
 h1. Prevent module for rah_bitly
 
-p. This is an example plugin for rah_bitly which showcases extending. The plugin will prevent generating Bitly links for articles published in section which name starts with underscore (@_@).
+p. This is an example plugin for rah_bitly which showcases extending. The plugin will prevent generating Bitly links for articles published in section which name starts with an underscore (@_@).
 
 p. You can also optionally exclude specific sections by adding configuration options to your Textpattern's @config.php@ file (e.g. @/textpattern/config.php@). The plugin expects a constant named @rah_bitly__prevent_sections@ containing comma-separated list of section names.
 
