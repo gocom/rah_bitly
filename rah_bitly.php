@@ -102,7 +102,7 @@ class rah_bitly {
 			$position++;
 		}
 		
-		set_pref(__CLASS__.'_version', self::$version, __CLASS__, PREF_HIDDEN, '', PREF_PRIVATE);
+		set_pref(__CLASS__.'_version', self::$version, __CLASS__, PREF_HIDDEN);
 	}
 	
 	/**
