@@ -23,7 +23,7 @@ class rah_bitly {
 	 * Stores instances
 	 */
 	
-	static public $instance = NULL;
+	static public $instance = null;
 	
 	/**
 	 * @var string Article's current permlink
@@ -111,7 +111,7 @@ class rah_bitly {
 	 */
 	
 	static public function get() {
-		if(self::$instance === NULL) {
+		if(self::$instance === null) {
 			self::$instance = new rah_bitly();
 		}
 		
