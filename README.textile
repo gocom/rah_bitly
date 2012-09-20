@@ -8,14 +8,14 @@ h2. Requirements
 
 p. Rah_bitly's minimum requirements:
 
-* Textpattern v4.5 or newer.
+* Textpattern 4.5.0 or newer.
 * PHP 5.2 or newer.
 ** "cURL":http://php.net/manual/en/book.curl.php library.
 * Installed on a web server with an internet connection and outgoing HTTP connections allowed.
 * "Bitly":http://bit.ly account.
 * End user: a modern web browser with JavaScript support.
 
-p. Most servers, including shared hosting spaces, should be able to run *rah_bitly* just fine as long as Textpattern v4.5.0 or newer is installed.
+p. Most servers, including shared hosting spaces, should be able to run *rah_bitly* just fine as long as Textpattern 4.5.0 or newer is installed.
 
 h2. Installing
 
@@ -70,7 +70,7 @@ h2. Changelog
 
 h3. Version 0.4 - 2012/08/27
 
-* Added: Textpattern v4.5.0 compatibility. Thank you, "Robert Wetzlmayr":https://github.com/rwetzlmayr.
+* Added: Textpattern 4.5.0 compatibility. Thank you, "Robert Wetzlmayr":https://github.com/rwetzlmayr.
 * Added: Finnish translation.
 * Fixed: A potential issue with uninstaller SQL statement's wildcards.
 * Changed: Textpacks aren't embedded to the code, but uses installer.
