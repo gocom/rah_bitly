@@ -11,7 +11,7 @@ p. Rah_bitly's minimum requirements:
 * Textpattern v4.5 or newer.
 * PHP 5.2 or newer.
 ** "cURL":http://php.net/manual/en/book.curl.php library.
-* Installed web server with internet connection and outgoing HTTP connections allowed.
+* Installed on a web server with an internet connection and outgoing HTTP connections allowed.
 * "Bitly":http://bit.ly account.
 * End user: a modern web browser with JavaScript support.
 
