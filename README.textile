@@ -68,6 +68,10 @@ p. The above snippet would display shortened Bitly link when placed to article "
 
 h2. Changelog
 
+h3. Version 0.4.1 - upcoming
+
+* Improved: Cleaned up the installer.
+
 h3. Version 0.4 - 2012/08/27
 
 * Added: Textpattern 4.5.0 compatibility. Thank you, "Robert Wetzlmayr":https://github.com/rwetzlmayr.
