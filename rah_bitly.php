@@ -206,6 +206,10 @@ class rah_bitly
 
 	/**
 	 * Hooks to article saving process and updates short URLs.
+	 *
+	 * @param string $event Callback event
+	 * @param string $step  Callback step
+	 * @param array  $r     Article data
 	 */
 
 	public function update($event, $step, $r)
