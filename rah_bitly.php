@@ -156,6 +156,7 @@ class rah_bitly
 	public function __construct()
 	{
 		add_privs('plugin_prefs.'.__CLASS__, '1,2');
+		add_privs('prefs.'.__CLASS__, '1,2');
 		register_callback(array(__CLASS__, 'prefs'), 'plugin_prefs.'.__CLASS__);
 		register_callback(array(__CLASS__, 'install'), 'plugin_lifecycle.'.__CLASS__);
 		register_callback(array($this, 'initialize'), 'article', '', 1);
