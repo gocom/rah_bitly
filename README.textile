@@ -68,7 +68,7 @@ p. The above snippet would display shortened Bitly link when placed to article "
 
 h2. Changelog
 
-h3. Version 0.4.2 - upcoming
+h3. Version 0.4.2 - 2012/12/21
 
 * Fixed: Undefined variable notices during article updates.
 * Added: Displays preferences group on Textpattern 4.6-dev's Preferences panel.

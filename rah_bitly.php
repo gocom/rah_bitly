@@ -27,7 +27,7 @@ class rah_bitly
 	 * @var string
 	 */
 
-	static public $version = '0.4.1';
+	static public $version = '0.4.2';
 
 	/**
 	 * Stores instances.
