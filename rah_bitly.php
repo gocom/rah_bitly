@@ -19,8 +19,8 @@
  * The plugin class.
  */
 
-class rah_bitly {
-
+class rah_bitly
+{
 	/**
 	 * Version number.
 	 *
@@ -92,42 +92,44 @@ class rah_bitly {
 	 * @param string $step  Admin-side, plugin-lifecycle step.
 	 */
 
-	static public function install($event='', $step='') {
-		
+	static public function install($event = '', $step = '')
+	{	
 		global $prefs;
-		
-		if($step == 'deleted') {
-			
+
+		if ($step == 'deleted')
+		{	
 			safe_delete(
 				'txp_prefs',
 				"name like 'rah\_bitly\_%'"
 			);
-			
+
 			return;
 		}
-		
-		if((string) get_pref(__CLASS__.'_version') === self::$version) {
+
+		if ((string) get_pref(__CLASS__.'_version') === self::$version)
+		{
 			return;
 		}
-		
+
 		$position = 250;
-		
-		foreach(
+
+		foreach (
 			array(
-				'login' => array('text_input', ''),
+				'login'  => array('text_input', ''),
 				'apikey' => array('text_input', ''),
-				'field' => array('rah_bitly_fields', ''),
+				'field'  => array('rah_bitly_fields', ''),
 			) as $name => $val
 		) {
 			$n =  __CLASS__.'_'.$name;
-			
-			if(!isset($prefs[$n])) {
+
+			if (!isset($prefs[$n]))
+			{
 				set_pref($n, $val[1], __CLASS__, PREF_ADVANCED, $val[0], $position);
 			}
-			
+
 			$position++;
 		}
-		
+
 		set_pref(__CLASS__.'_version', self::$version, __CLASS__, PREF_HIDDEN);
 	}
 
@@ -137,11 +139,13 @@ class rah_bitly {
 	 * @return rah_bitly
 	 */
 
-	static public function get() {
-		if(self::$instance === null) {
+	static public function get()
+	{
+		if (self::$instance === null)
+		{
 			self::$instance = new rah_bitly();
 		}
-		
+
 		return self::$instance;
 	}
 
@@ -149,7 +153,8 @@ class rah_bitly {
 	 * Constructor.
 	 */
 
-	public function __construct() {
+	public function __construct()
+	{
 		add_privs('plugin_prefs.'.__CLASS__, '1,2');
 		register_callback(array(__CLASS__, 'prefs'), 'plugin_prefs.'.__CLASS__);
 		register_callback(array(__CLASS__, 'install'), 'plugin_lifecycle.'.__CLASS__);
@@ -160,20 +165,22 @@ class rah_bitly {
 	 * Initializes the plugin.
 	 */
 
-	public function initialize() {
-		
-		foreach(array('login', 'apikey', 'field') as $name) {
+	public function initialize()
+	{	
+		foreach (array('login', 'apikey', 'field') as $name)
+		{
 			$this->$name = get_pref(__CLASS__.'_'.$name);
 		}
-		
+
 		$this->field = (int) $this->field;
-		
-		if(!$this->login || !$this->apikey || !$this->field) {
+
+		if (!$this->login || !$this->apikey || !$this->field)
+		{
 			return;
 		}
-		
+
 		include_once txpath.'/publish/taghandlers.php';
-		
+
 		$this->previous_state();
 		register_callback(array($this, 'update'), 'article_saved');
 		register_callback(array($this, 'update'), 'article_posted');
@@ -183,14 +190,15 @@ class rah_bitly {
 	 * Fetches old article data.
 	 */
 
-	public function previous_state() {
-		
+	public function previous_state()
+	{	
 		$id = (int) ps('ID');
-		
-		if(!$id) {
+
+		if (!$id)
+		{
 			return;
 		}
-		
+
 		$this->prev_permlink = permlinkurl_id($id);
 		$this->prev_status = fetch('Status', 'textpattern', 'ID', $id);
 		unset($GLOBALS['permlinks'][$id]);
@@ -200,48 +208,52 @@ class rah_bitly {
 	 * Hooks to article saving process and updates short URLs.
 	 */
 
-	public function update($event, $step, $r) {
-		
+	public function update($event, $step, $r)
+	{	
 		global $app_mode;
-		
+
 		$this->permlink = permlinkurl_id($r['ID']);
-		
+
 		callback_event('rah_bitly.update', '', false, $r);
-		
-		if(!$this->permlink || $r['Status'] < STATUS_LIVE) {
+
+		if (!$this->permlink || $r['Status'] < STATUS_LIVE)
+		{
 			return;
 		}
-		
-		if(
+
+		if (
 			$this->prev_permlink !== $this->permlink ||
 			empty($r['custom_'.$this->field]) ||
 			$prev_status != $r['status']
 		) {
 			$uri = $this->fetch($this->permlink);
 		}
-		
-		if(empty($uri)) {
+
+		if (empty($uri))
+		{
 			return;
 		}
-		
+
 		$fields = getCustomFields();
-		
-		if(!isset($fields[$this->field])) {
+
+		if (!isset($fields[$this->field]))
+		{
 			return;
 		}
-		
+
 		safe_update(
 			'textpattern',
 			'custom_'.intval($this->field)."='".doSlash($uri)."'",
 			"ID='".doSlash($r['ID'])."'"
 		);
-		
+
 		$js = 
 			'$(document).ready(function(){'.
 				'$(\'input[name="custom_'.$this->field.'"]\').val("'.escape_js($uri).'");'.
 			'});';
-		
-		if($app_mode == 'async') {
+
+		if ($app_mode == 'async')
+		{
 			send_script_response($js);
 		}
 	}
@@ -254,19 +266,20 @@ class rah_bitly {
 	 * @return string
 	 */
 
-	protected function fetch($permlink, $timeout=10) {
-		
-		if(!$permlink || !function_exists('curl_init')) {
+	protected function fetch($permlink, $timeout = 10)
+	{
+		if (!$permlink || !function_exists('curl_init'))
+		{
 			return;
 		}
-		
+
 		$uri = 
 			'https://api-ssl.bitly.com/v3/shorten'.
 				'?login='.urlencode($this->login).
 				'&apiKey='.urlencode($this->apikey).
 				'&longUrl='.urlencode($permlink).
 				'&format=txt';
-		
+
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $uri);
 		curl_setopt($ch, CURLOPT_FAILONERROR, 1);
@@ -275,7 +288,7 @@ class rah_bitly {
 		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
 		$bitcode = curl_exec($ch);
 		curl_close($ch);
-		
+
 		return $bitcode && strpos($bitcode, 'http') === 0 ? txpspecialchars(trim($bitcode)) : '';
 	}
 
@@ -283,7 +296,8 @@ class rah_bitly {
 	 * Redirect to the admin-side interface.
 	 */
 
-	static public function prefs() {
+	static public function prefs()
+	{
 		header('Location: ?event=prefs&step=advanced_prefs#prefs-rah_bitly_login');
 		echo 
 			'<p>'.n.
@@ -300,7 +314,8 @@ class rah_bitly {
  * @return string HTML select field
  */
 
-	function rah_bitly_fields($name, $val) {
+	function rah_bitly_fields($name, $val)
+	{
 		return selectInput($name, getCustomFields(), $val, true, '', $name);
 	}
 ?>
