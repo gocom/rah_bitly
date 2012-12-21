@@ -3,10 +3,10 @@
 /**
  * Rah_bitly plugin for Textpattern CMS.
  *
- * @author Jukka Svahn
- * @date 2011-
+ * @author  Jukka Svahn
+ * @date    2011-
  * @license GNU GPLv2
- * @link http://rahforum.biz/plugins/rah_bitly
+ * @link    http://rahforum.biz/plugins/rah_bitly
  * 
  * Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
  * Licensed under GNU Genral Public License version 2
@@ -15,56 +15,81 @@
 
 	rah_bitly::get();
 
+/**
+ * The plugin class.
+ */
+
 class rah_bitly {
-	
+
+	/**
+	 * Version number.
+	 *
+	 * @var string
+	 */
+
 	static public $version = '0.4.1';
-	
+
 	/**
-	 * Stores instances
+	 * Stores instances.
+	 *
+	 * @var rah_bitly
 	 */
-	
+
 	static public $instance = null;
-	
+
 	/**
-	 * @var string Article's current permlink
+	 * Article's current permlink.
+	 *
+	 * @var string
 	 */
-	
+
 	public $permlink;
-	
+
 	/**
-	 * @var string Article's previous permlink
+	 * Article's previous permlink.
+	 *
+	 * @var string
 	 */
-	
+
 	public $prev_permlink;
-	
+
 	/**
-	 * @var int Article's previous status
+	 * Article's previous status.
+	 *
+	 * @var int
 	 */
-	
+
 	private $prev_status;
 	
 	/**
-	 * @var string Bitly login
+	 * Bitly login.
+	 *
+	 * @var string
 	 */
-	
+
 	private $login;
-	
+
 	/**
-	 * @var string Bitly API key
+	 * Bitly API key.
+	 *
+	 * @var string
 	 */
-	
+
 	private $apikey;
-	
+
 	/**
-	 * @var int Custom field ID
+	 * Custom field ID.
+	 *
+	 * @var int
 	 */
-	
+
 	private $field;
 
 	/**
-	 * Installer
+	 * Installer.
+	 *
 	 * @param string $event Admin-side event.
-	 * @param string $step Admin-side, plugin-lifecycle step.
+	 * @param string $step  Admin-side, plugin-lifecycle step.
 	 */
 
 	static public function install($event='', $step='') {
@@ -105,12 +130,13 @@ class rah_bitly {
 		
 		set_pref(__CLASS__.'_version', self::$version, __CLASS__, PREF_HIDDEN);
 	}
-	
+
 	/**
-	 * Gets an instance
-	 * @return obj
+	 * Gets an instance.
+	 *
+	 * @return rah_bitly
 	 */
-	
+
 	static public function get() {
 		if(self::$instance === null) {
 			self::$instance = new rah_bitly();
@@ -118,22 +144,22 @@ class rah_bitly {
 		
 		return self::$instance;
 	}
-	
+
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
-	
+
 	public function __construct() {
 		add_privs('plugin_prefs.'.__CLASS__, '1,2');
 		register_callback(array(__CLASS__, 'prefs'), 'plugin_prefs.'.__CLASS__);
 		register_callback(array(__CLASS__, 'install'), 'plugin_lifecycle.'.__CLASS__);
 		register_callback(array($this, 'initialize'), 'article', '', 1);
 	}
-	
+
 	/**
-	 * Initializes
+	 * Initializes the plugin.
 	 */
-	
+
 	public function initialize() {
 		
 		foreach(array('login', 'apikey', 'field') as $name) {
@@ -152,11 +178,11 @@ class rah_bitly {
 		register_callback(array($this, 'update'), 'article_saved');
 		register_callback(array($this, 'update'), 'article_posted');
 	}
-	
+
 	/**
-	 * Fetches old article data
+	 * Fetches old article data.
 	 */
-	 
+
 	public function previous_state() {
 		
 		$id = (int) ps('ID');
@@ -171,7 +197,7 @@ class rah_bitly {
 	}
 
 	/**
-	 * Hooks to article saving process and updates short URLs
+	 * Hooks to article saving process and updates short URLs.
 	 */
 
 	public function update($event, $step, $r) {
@@ -221,9 +247,10 @@ class rah_bitly {
 	}
 
 	/**
-	 * Fetches a Bitly short URL
-	 * @param string $permlink The long URL to shorten
-	 * @param int $timeout Timeout in seconds
+	 * Fetches a Bitly short URL.
+	 *
+	 * @param  string $permlink The long URL to shorten
+	 * @param  int    $timeout  Timeout in seconds
 	 * @return string
 	 */
 
@@ -251,9 +278,9 @@ class rah_bitly {
 		
 		return $bitcode && strpos($bitcode, 'http') === 0 ? txpspecialchars(trim($bitcode)) : '';
 	}
-	
+
 	/**
-	 * Redirect to the admin-side interface
+	 * Redirect to the admin-side interface.
 	 */
 
 	static public function prefs() {
@@ -266,10 +293,11 @@ class rah_bitly {
 }
 
 /**
- * Lists all available custom fields
- * @param string $name Preference field's name.
- * @param string $val Current value.
- * @return string HTML select field.
+ * Lists all available custom fields.
+ *
+ * @param  string $name Preference field's name
+ * @param  string $val  Current value
+ * @return string HTML select field
  */
 
 	function rah_bitly_fields($name, $val) {
