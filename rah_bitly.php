@@ -228,7 +228,7 @@ class rah_bitly
 		if (
 			$this->prev_permlink !== $this->permlink ||
 			empty($r['custom_'.$this->field]) ||
-			$prev_status != $r['Status']
+			$this->prev_status != $r['Status']
 		) {
 			$uri = $this->fetch($this->permlink);
 		}
