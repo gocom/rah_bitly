@@ -18,6 +18,8 @@
 		"forum" : "http://forum.textpattern.com/viewtopic.php?id=36497"
 	},
 	"require": {
+		"php": ">=5.2.0",
+		"ext-curl": "*",
 		"textpattern/lock": ">=4.5.0",
 		"textpattern/installer": "*"
 	}
