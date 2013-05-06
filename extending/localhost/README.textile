@@ -1,3 +1,0 @@
-h1. Localhost module for rah_bitly
-
-p. This is a plugin for rah_bitly meant for testing environment purposes. It adds @http://example.com/#@ to the beginning of all published short links. This makes a permanent link pointing to a local address publishable and testing possible.
