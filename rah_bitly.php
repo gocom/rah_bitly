@@ -323,4 +323,3 @@ class rah_bitly
 	{
 		return selectInput($name, getCustomFields(), $val, true, '', $name);
 	}
-?>
