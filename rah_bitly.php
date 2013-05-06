@@ -13,12 +13,6 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-	rah_bitly::get();
-
-/**
- * The plugin class.
- */
-
 class rah_bitly
 {
 	/**
@@ -310,6 +304,8 @@ class rah_bitly
 			'</p>';
 	}
 }
+
+rah_bitly::get();
 
 /**
  * Lists all available custom fields.
