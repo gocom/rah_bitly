@@ -1,0 +1,24 @@
+{
+	"name": "rah/rah_bitly",
+	"description": "Bitly integration for Textpattern",
+	"keywords": ["textpattern", "plugin"],
+	"homepage": "http://rahforum.biz/plugins/rah_bitly",
+	"license": "GPL-2.0",
+	"type": "textpattern-plugin",
+	"authors": [
+		{
+			"name": "Jukka Svahn",
+			"homepage": "http://rahforum.biz",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/gocom/rah_bitly/issues",
+		"source": "https://github.com/gocom/rah_bitly",
+		"forum" : "http://forum.textpattern.com/viewtopic.php?id=36497"
+	},
+	"require": {
+		"textpattern/lock": ">=4.5.0",
+		"textpattern/installer": "*"
+	}
+}
