@@ -75,9 +75,7 @@ class rah_bitly
 	 */
 
 	public function install()
-	{	
-		global $prefs;
-
+	{
 		$position = 250;
 
 		foreach (
@@ -87,9 +85,9 @@ class rah_bitly
 				'field'  => array('rah_bitly_fields', ''),
 			) as $name => $val
 		) {
-			$n =  __CLASS__.'_'.$name;
+			$n = 'rah_bity_'.$name;
 
-			if (!isset($prefs[$n]))
+			if (get_pref($n, false) === false)
 			{
 				set_pref($n, $val[1], __CLASS__, PREF_ADVANCED, $val[0], $position);
 			}
