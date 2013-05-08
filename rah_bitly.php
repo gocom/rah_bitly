@@ -15,14 +15,6 @@
 class rah_bitly
 {
 	/**
-	 * Version number.
-	 *
-	 * @var string
-	 */
-
-	static public $version = '0.4.2';
-
-	/**
 	 * Stores instances.
 	 *
 	 * @var rah_bitly
@@ -99,11 +91,6 @@ class rah_bitly
 			return;
 		}
 
-		if ((string) get_pref(__CLASS__.'_version') === self::$version)
-		{
-			return;
-		}
-
 		$position = 250;
 
 		foreach (
@@ -122,8 +109,6 @@ class rah_bitly
 
 			$position++;
 		}
-
-		set_pref(__CLASS__.'_version', self::$version, __CLASS__, PREF_HIDDEN);
 	}
 
 	/**
