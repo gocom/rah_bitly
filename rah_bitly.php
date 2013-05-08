@@ -72,24 +72,11 @@ class rah_bitly
 
 	/**
 	 * Installer.
-	 *
-	 * @param string $event Admin-side event.
-	 * @param string $step  Admin-side, plugin-lifecycle step.
 	 */
 
-	static public function install($event = '', $step = '')
+	public function install()
 	{	
 		global $prefs;
-
-		if ($step == 'deleted')
-		{	
-			safe_delete(
-				'txp_prefs',
-				"name like 'rah\_bitly\_%'"
-			);
-
-			return;
-		}
 
 		$position = 250;
 
@@ -109,6 +96,18 @@ class rah_bitly
 
 			$position++;
 		}
+	}
+
+	/**
+	 * Uninstaller.
+	 */
+
+	public function uninstall()
+	{
+		safe_delete(
+			'txp_prefs',
+			"name like 'rah\_bitly\_%'"
+		);
 	}
 
 	/**
@@ -136,7 +135,8 @@ class rah_bitly
 		add_privs('plugin_prefs.'.__CLASS__, '1,2');
 		add_privs('prefs.'.__CLASS__, '1,2');
 		register_callback(array(__CLASS__, 'prefs'), 'plugin_prefs.'.__CLASS__);
-		register_callback(array(__CLASS__, 'install'), 'plugin_lifecycle.'.__CLASS__);
+		register_callback(array($this, 'install'), 'plugin_lifecycle.rah_bitly', 'installed');
+		register_callback(array($this, 'uninstall'), 'plugin_lifecycle.rah_bitly', 'deleted');
 		register_callback(array($this, 'initialize'), 'article', '', 1);
 	}
 
