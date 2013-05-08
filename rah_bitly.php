@@ -4,7 +4,6 @@
  * Rah_bitly plugin for Textpattern CMS.
  *
  * @author  Jukka Svahn
- * @date    2011-
  * @license GNU GPLv2
  * @link    http://rahforum.biz/plugins/rah_bitly
  * 
