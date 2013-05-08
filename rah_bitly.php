@@ -89,7 +89,7 @@ class rah_bitly
 
 			if (get_pref($n, false) === false)
 			{
-				set_pref($n, $val[1], __CLASS__, PREF_ADVANCED, $val[0], $position);
+				set_pref($n, $val[1], 'rah_bitly', PREF_ADVANCED, $val[0], $position);
 			}
 
 			$position++;
@@ -130,9 +130,9 @@ class rah_bitly
 
 	public function __construct()
 	{
-		add_privs('plugin_prefs.'.__CLASS__, '1,2');
-		add_privs('prefs.'.__CLASS__, '1,2');
-		register_callback(array(__CLASS__, 'prefs'), 'plugin_prefs.'.__CLASS__);
+		add_privs('plugin_prefs.rah_bitly', '1,2');
+		add_privs('prefs.rah_bitly', '1,2');
+		register_callback(array($this, 'prefs'), 'plugin_prefs.rah_bitly');
 		register_callback(array($this, 'install'), 'plugin_lifecycle.rah_bitly', 'installed');
 		register_callback(array($this, 'uninstall'), 'plugin_lifecycle.rah_bitly', 'deleted');
 		register_callback(array($this, 'initialize'), 'article', '', 1);
@@ -146,7 +146,7 @@ class rah_bitly
 	{	
 		foreach (array('login', 'apikey', 'field') as $name)
 		{
-			$this->$name = get_pref(__CLASS__.'_'.$name);
+			$this->$name = get_pref('rah_bitly_'.$name);
 		}
 
 		$this->field = (int) $this->field;
@@ -277,7 +277,7 @@ class rah_bitly
 	 * Redirect to the admin-side interface.
 	 */
 
-	static public function prefs()
+	public function prefs()
 	{
 		header('Location: ?event=prefs&step=advanced_prefs#prefs-rah_bitly_login');
 		echo 
