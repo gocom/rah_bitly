@@ -37,7 +37,7 @@ The link that the plugin will shorten is the article's permanent link, the real 
 
 h2. Displaying links
 
-Displaying Bitly links on your page templates and articles is easy and customizable due to the fact that a "custom field":http://textpattern.net/wiki/index.php?title=custom_field is used to store the shortened links.
+Displaying Bitly links on your page templates and articles is easy and customizable due to the fact that a "custom field":https://docs.textpattern.com/tags/custom_field is used to store the shortened links.
 
 bc. <txp:if_custom_field name="short_url">
 	<a href="<txp:custom_field name="short_url" />">
