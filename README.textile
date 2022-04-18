@@ -14,12 +14,14 @@ Or "download":https://github.com/gocom/rah_bitly/releases an installer package.
 
 h2. Configuration
 
-To start using rah_bitly, you will first need to configure your *Bitly access token* and a "custom field":http://textpattern.net/wiki/index.php?title=custom_field you want to use to store the shortened links. You can find the options in Textpattern admin at *Admin* / *Preferences* and from the page *Bitly Integration* section.
+To start using rah_bitly, you will first need to configure your *Bitly access token* and a field you want to use to store the shortened links. You can find the options in Textpattern admin at the page *Admin* / *Preferences* and from there *Bitly Integration* section. Included options are:
 
-* *Bitly access token* is your generic access token key. You can "get your own access token here":https://app.bitly.com/settings/api/.
-* *Store in a custom field* is the custom field that will be used to store the shortened links.
+* *Bitly access token* is your generic access token. You can "generate your own access token in your Bitly account API settings":https://app.bitly.com/settings/api/.
+* *Store in a field* is the field that will be used to store the shortened links. This supports article custom fields.
 
 h2. Usage
+
+h3. Generating links
 
 Bitly links are generated for an article when one of the three conditions is met:
 
@@ -31,11 +33,11 @@ All three conditions only apply while the article is in, or is saved with, *live
 
 All generated links will follow your Bitly account's preferences, including your custom domain or preferred domain.
 
-If requesting a short link from Bitly fails due to connection error, or because Bitly's servers are temporarily unreachable, a new request is sent when the article is saved again. You will notice if the request has been successful when there is a shortened link in the custom field.
+If requesting a short link from Bitly fails due to connection error, or because Bitly's servers are temporarily unreachable, a new request is sent when the article is saved again. You will notice if the request has been successful when there is a shortened link in the custom field and error message is shown in the editor.
 
 The link that the plugin will shorten is the article's permanent link, the real location of the individual article page that Textpattern responds to. It's the same location as where the **View** link points on the *Write* admin page.
 
-h2. Displaying links
+h3. Displaying links
 
 Displaying Bitly links on your page templates and articles is easy and customizable due to the fact that a "custom field":https://docs.textpattern.com/tags/custom_field is used to store the shortened links.
 
@@ -47,7 +49,7 @@ bc. <txp:if_custom_field name="short_url">
 	<p>No short link.</p>
 </txp:if_custom_field>
 
-The above snippet would display shortened Bitly link when placed to article context, or @No short link.@ message, if the article does not have short link.
+The above snippet would display shortened Bitly link when placed to article context. If article doesn't have a short link, @No short link.@ message is shown instead.
 
 h2. Changelog
 
