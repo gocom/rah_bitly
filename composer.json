@@ -1,26 +1,40 @@
 {
-	"name": "rah/rah_bitly",
-	"description": "Bitly integration for Textpattern",
-	"keywords": ["textpattern", "plugin"],
-	"homepage": "http://rahforum.biz/plugins/rah_bitly",
-	"license": "GPL-2.0",
-	"type": "textpattern-plugin",
-	"authors": [
-		{
-			"name": "Jukka Svahn",
-			"homepage": "http://rahforum.biz",
-			"role": "Developer"
-		}
-	],
-	"support": {
-		"issues": "https://github.com/gocom/rah_bitly/issues",
-		"source": "https://github.com/gocom/rah_bitly",
-		"forum": "http://forum.textpattern.com/viewtopic.php?id=36497"
-	},
-	"require": {
-		"php": ">=5.2.0",
-		"ext-curl": "*",
-		"textpattern/lock": ">=4.5.0",
-		"textpattern/installer": "*"
-	}
+    "name": "rah/rah_bitly",
+    "description": "Bitly integration for Textpattern CMS",
+    "keywords": ["textpattern", "plugin"],
+    "homepage": "https://github.com/gocom/rah_bitly",
+    "license": "GPL-2.0",
+    "type": "textpattern-plugin",
+    "authors": [
+        {
+            "name": "Jukka Svahn",
+            "homepage": "https://github.com/gocom",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/gocom/rah_bitly/issues",
+        "source": "https://github.com/gocom/rah_bitly"
+    },
+    "require": {
+        "php": ">=7.2.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "textpattern/lock": ">=4.7.0",
+        "textpattern/installer": "*"
+    },
+    "require-dev": {
+        "rah/mtxpc": "^0.9.0",
+        "squizlabs/php_codesniffer": "3.*"
+    },
+    "scripts": {
+        "lint": "./vendor/bin/phpcs",
+        "lint-fix": "./vendor/bin/phpcbf",
+        "compile": "mtxpc --outdir=dist/ -c . && mtxpc --outdir=dist/ ."
+    },
+    "config": {
+        "allow-plugins": {
+            "textpattern/installer": true
+        }
+    }
 }

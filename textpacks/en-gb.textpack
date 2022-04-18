@@ -1,6 +1,5 @@
 #@admin
-#Default language, en-us, en-gb
 rah_bitly => Bitly integration
-rah_bitly_login => Bitly login
-rah_bitly_apikey => API key
-rah_bitly_field => Store in a custom field
+rah_bitly_access_token => Bitly access token
+rah_bitly_field => Store in a field
+rah_bitly_error_response => No short link generated. Bitly responded with an error {code} {message} {description}.

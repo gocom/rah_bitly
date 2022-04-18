@@ -1,6 +1,6 @@
 #@admin
 #@language fi-fi
 rah_bitly => Bitly integraatio
-rah_bitly_login => Bitly tunnus
-rah_bitly_apikey => API-avain
-rah_bitly_field => Tallennataan muokattavaan kenttään
+rah_bitly_access_token => Bitly access token
+rah_bitly_field => Tallennetaan kenttään
+rah_bitly_error_response => Lyhennetty linkkiä ei luotu. Bitly vastasi virheellä {code} {message} {description}.
