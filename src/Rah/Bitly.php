@@ -117,10 +117,9 @@ final class Rah_Bitly
             return;
         }
 
-        if (
-            $this->previousPermlink !== $permlink ||
-            empty($r['custom_'.$this->getField()]) ||
-            $this->previousStatus != $r['Status']
+        if ($this->previousPermlink !== $permlink
+            || empty($r['custom_'.$this->getField()])
+            || $this->previousStatus != $r['Status']
         ) {
             try {
                 $shortlink = $this->getShortLink($permlink);

@@ -53,7 +53,7 @@ The above snippet would display shortened Bitly link when placed to article cont
 
 h2. Changelog
 
-h3. Version 0.5.0 - upcoming
+h3. Version 0.5.0 - 2022/04/18
 
 * Bitly API version 4 compatibility.
 * Textpattern >= 4.7.0 compatibility.
