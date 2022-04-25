@@ -111,9 +111,13 @@ final class Rah_Bitly
     {
         global $app_mode;
 
-        $permlink = permlinkurl_id($r['ID']);
+        if ($r['Status'] < STATUS_LIVE) {
+            return;
+        }
 
-        if (!$permlink || $r['Status'] < STATUS_LIVE) {
+        $permlink = $this->getArticlePermlink($r);
+
+        if (!$permlink) {
             return;
         }
 
@@ -171,6 +175,25 @@ EOF;
     {
         header('Location: ?event=prefs#prefs_group_rah_bitly');
         echo graf(href(gTxt('continue'), ['href' => '?event=prefs#prefs_group_rah_bitly']));
+    }
+
+    /**
+     * Gets permanent URL for the given article data.
+     *
+     * @param array $articleData
+     *
+     * @return string|null
+     */
+    private function getArticlePermlink(array $articleData): ?string
+    {
+        $data = [
+            'permlink' => permlinkurl_id($articleData['ID']),
+            'articleData' => $articleData,
+        ];
+
+        callback_event_ref('rah_bitly.permlink', '', 0, $data);
+
+        return $data['permlink'] ?? null;
     }
 
     /**
