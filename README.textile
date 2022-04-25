@@ -51,7 +51,28 @@ bc. <txp:if_custom_field name="short_url">
 
 The above snippet would display shortened Bitly link when placed to article context. If article doesn't have a short link, @No short link.@ message is shown instead.
 
+h2. For developers
+
+h3. Customizing permlinks
+
+The plugin offers @rah_bitly.permlink@ callback event that can be used to customize the article permanent link that is sent to Bitly. An example observer registered to the event might look something like:
+
+bc.. register_callback('abc_example', 'rah_bitly.permlink');
+
+function abc_example($event, $step, &$data): void
+{
+    if ($data['articleData']['Section'] === 'example') {
+        $data['permlink'] .= '#bitly';
+    }
+}
+
+p. The above would add '#bitly' anchor to the sent URL, if the article is published to the section named `example`.
+
 h2. Changelog
+
+h3. Version 0.5.1 - 2022/04/25
+
+* Added @rah_bitly.permlink@ callback event that can be used to customize the article permlink that is sent to Bitly.
 
 h3. Version 0.5.0 - 2022/04/18
 
