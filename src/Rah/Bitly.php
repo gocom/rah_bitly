@@ -1,7 +1,7 @@
 <?php
 
 /*
- * rah_function - Every PHP function is a Textpattern CMS tag
+ * rah_bitly - Bitly integration for Textpattern CMS
  * https://github.com/gocom/rah_bitly
  *
  * Copyright (C) 2022 Jukka Svahn
